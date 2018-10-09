@@ -1,5 +1,0 @@
-SeniorCS
-FinancialManager
-AdminManager
-ProductionManager
-ServiceManager

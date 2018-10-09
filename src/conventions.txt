@@ -1,0 +1,10 @@
+Sender/receiver:
+"SeniorCS"
+"FinancialManager"
+"AdminManager"
+"ProductionManager"
+"ServiceManager"
+
+type of Form:
+"Update" = just a request to get its pending forms from server
+
