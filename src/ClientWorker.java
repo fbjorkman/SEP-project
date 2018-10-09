@@ -29,10 +29,11 @@ public class ClientWorker extends Server implements Runnable {
     public void run() {
         try {
             Form f = (Form) inputStream.readObject();
-            if (!f.type.equals("Update")){  // client sent in a form
+            if (f.type.equals("Update")) {  // client sent in request for update
+                sendPending(f); // send pending forms to the client
+            } else {
                 addForm(f); // add form to right user queue
             }
-            sendPending(f); // send pending forms to the sender
             inputStream.close();
             client.close();
         } catch (IOException ex) {
@@ -44,17 +45,16 @@ public class ClientWorker extends Server implements Runnable {
 
     private void addForm(Form f) {
         switch (f.receiver) {
-            case "SeniorCS": ;
+            case "SeniorCS":
                 addToList(SeniorCS, f);
-
             case "FinancialManager":
                 addToList(FinancialManager, f);
-
-            case "AdminManager": ;
-
-            case "ProductionManager": ;
-
-            case "ServiceManager": ;
+            case "AdminManager":
+                addToList(AdminManager, f);
+            case "ProductionManager":
+                addToList(ProductionManager, f);
+            case "ServiceManager":
+                addToList(ServiceManager, f);
         }
     }
 
