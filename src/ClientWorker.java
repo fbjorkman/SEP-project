@@ -12,7 +12,6 @@ import java.util.logging.Logger;
  *
  * @author harald
  *
- * TODO: Använd synchronized på respekte lista beroende på request typ.
  */
 public class ClientWorker extends Server implements Runnable {
 

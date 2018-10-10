@@ -9,20 +9,21 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * @author harald
  */
-public class Server {
+public class Server implements Runnable{
 
     private ServerSocket server;
     static final int portNumber = 4444;
 
-    LinkedBlockingQueue<Form> FinancialManager = new LinkedBlockingQueue<Form>();
-    LinkedBlockingQueue<Form> SeniorCS = new LinkedBlockingQueue<Form>();
-    LinkedBlockingQueue<Form> AdminManager = new LinkedBlockingQueue<Form>();
-    LinkedBlockingQueue<Form> ProductionManager = new LinkedBlockingQueue<Form>();
-    LinkedBlockingQueue<Form> ServiceManager = new LinkedBlockingQueue<Form>();
+    static LinkedBlockingQueue<Form> FinancialManager = new LinkedBlockingQueue<Form>();
+    static LinkedBlockingQueue<Form> SeniorCS = new LinkedBlockingQueue<Form>();
+    static LinkedBlockingQueue<Form> AdminManager = new LinkedBlockingQueue<Form>();
+    static LinkedBlockingQueue<Form> ProductionManager = new LinkedBlockingQueue<Form>();
+    static LinkedBlockingQueue<Form> ServiceManager = new LinkedBlockingQueue<Form>();
 
-    public void listenSocket() {
+    public void run() {
         try {
             server = new ServerSocket(portNumber);
+            System.out.println("Server started on port " + portNumber);
         } catch (IOException e) {
             System.out.println("Could not listen on port " + portNumber);
             System.exit(-1);
@@ -46,8 +47,7 @@ public class Server {
     }
 
     public LinkedList<Form> copyAndEmptyList(LinkedBlockingQueue<Form> list) {
-        LinkedList<Form> copy;
-        copy = new LinkedList<Form>(list);
+        LinkedList<Form> copy =  new LinkedList<Form>(list);
         list.clear();
         return copy;
     }
