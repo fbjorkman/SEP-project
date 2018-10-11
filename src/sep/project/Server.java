@@ -3,6 +3,7 @@ package sep.project;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -13,13 +14,17 @@ public class Server implements Runnable{
 
     private ServerSocket server;
     static final int portNumber = 4444;
-
-    static LinkedBlockingQueue<Form> FinancialManager = new LinkedBlockingQueue<Form>();
-    static LinkedBlockingQueue<Form> SeniorCS = new LinkedBlockingQueue<Form>();
-    static LinkedBlockingQueue<Form> AdminManager = new LinkedBlockingQueue<Form>();
-    static LinkedBlockingQueue<Form> ProductionManager = new LinkedBlockingQueue<Form>();
-    static LinkedBlockingQueue<Form> ServiceManager = new LinkedBlockingQueue<Form>();
-
+    // id is used to assign id to new event requests
+    protected int id = 1;
+    // map for checking if an event id has been approved twice
+    static ConcurrentHashMap<Integer, Integer> pendingEvents = new ConcurrentHashMap<>();   
+    // the notification list of each user
+    static LinkedBlockingQueue<Form> FinancialManager = new LinkedBlockingQueue<>();
+    static LinkedBlockingQueue<Form> SeniorCS = new LinkedBlockingQueue<>();
+    static LinkedBlockingQueue<Form> AdminManager = new LinkedBlockingQueue<>();
+    static LinkedBlockingQueue<Form> ProductionManager = new LinkedBlockingQueue<>();
+    static LinkedBlockingQueue<Form> ServiceManager = new LinkedBlockingQueue<>();
+    
     public void run() {
         try {
             server = new ServerSocket(portNumber);
@@ -44,6 +49,10 @@ public class Server implements Runnable{
 
     public void addToList(LinkedBlockingQueue<Form> list, Form f) {
         list.add(f);
+    }
+    
+    public synchronized int getId(){
+        return id++;
     }
 
     public LinkedList<Form> copyAndEmptyList(LinkedBlockingQueue<Form> list) {
