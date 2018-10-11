@@ -5,7 +5,7 @@ package sep.project;
  * @author harald
  */
 public class Form {
-    String sender;
-    String receiver;
-    String type;
+    public String sender;
+    public String receiver;
+    public String type;
 }
