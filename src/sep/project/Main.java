@@ -1,3 +1,5 @@
+package sep.project;
+
 import java.awt.*;
 
 public class Main implements Runnable {
@@ -14,7 +16,7 @@ public class Main implements Runnable {
             EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                        GUIEventRequestForm window = new GUIEventRequestForm();
+                        sep.project.GUIEventRequestForm window = new sep.project.GUIEventRequestForm();
                         window.frame.setVisible(true);
                     } catch (Exception e) {
                         e.printStackTrace();

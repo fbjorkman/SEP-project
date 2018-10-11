@@ -1,4 +1,4 @@
-import javax.swing.*;
+package sep.project;
 
 public class EventRequestForm extends sep.project.Form {
     private int recNum;
@@ -18,9 +18,7 @@ public class EventRequestForm extends sep.project.Form {
                             String startDate, String endDate, int expNumAttend,
                             boolean decor, boolean parties, boolean photo, boolean food, boolean drinks,
                             double expBudget){
-        super.sender = "SeniorCS";
-        super.receiver = "FinancialManager";
-        super.type = "EventRequestForm";
+        super("SeniorCS", "FinancialManager", "EventRequestForm");
 
         this.recNum = recNum;
         this.clientName = clientName;

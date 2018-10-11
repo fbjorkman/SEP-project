@@ -1,3 +1,5 @@
+package sep.project;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -153,7 +155,7 @@ public class GUIEventRequestForm {
                     JOptionPane.showMessageDialog(null, "Data Missing");
                 else {
                     JOptionPane.showMessageDialog(null, "Data Submitted");
-                    EventRequestForm form = new EventRequestForm(Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventTypeField.getText(),
+                    sep.project.EventRequestForm form = new sep.project.EventRequestForm(Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventTypeField.getText(),
                                                                 startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
                                                                 decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
                                                                 Integer.parseInt(expBudgetField.getText()));
