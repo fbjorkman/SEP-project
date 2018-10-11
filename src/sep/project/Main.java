@@ -5,22 +5,22 @@ import java.awt.*;
 public class Main implements Runnable {
     public static void main(String args[]){
         Thread t1 = new Thread(new Main());
-        Thread t2 = new Thread(new Main());
         t1.start();
-        t2.start();
+//        Thread t2 = new Thread(new Main());
+//        t2.start();
     }
 
     @Override
     public void run() {
         try{
-            EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    try {
-                        sep.project.GUIEventRequestForm window = new sep.project.GUIEventRequestForm();
-                        window.frame.setVisible(true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            EventQueue.invokeLater(() -> {
+                try {
+//                    GUIEventRequestForm window1 = new GUIEventRequestForm();
+//                    window1.frame.setVisible(true);
+                    GUISeniorCS window2 = new GUISeniorCS();
+                    window2.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
         }

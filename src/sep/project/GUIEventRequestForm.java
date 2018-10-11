@@ -2,8 +2,6 @@ package sep.project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUIEventRequestForm {
     public JFrame frame;
@@ -147,27 +145,21 @@ public class GUIEventRequestForm {
         frame.getContentPane().add(btnCancel);
 
 
-        btnSubmit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if(recNumField.getText().isEmpty()||(clientNameField.getText().isEmpty())
-                        ||(eventTypeField.getText().isEmpty())||(startDateField.getText().isEmpty())
-                        ||endDateField.getText().isEmpty()||expNumAttendField.getText().isEmpty())
-                    JOptionPane.showMessageDialog(null, "Data Missing");
-                else {
-                    JOptionPane.showMessageDialog(null, "Data Submitted");
-                    sep.project.EventRequestForm form = new sep.project.EventRequestForm(Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventTypeField.getText(),
-                                                                startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
-                                                                decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
-                                                                Integer.parseInt(expBudgetField.getText()));
-                }
+        btnSubmit.addActionListener(arg0 -> {
+            if(recNumField.getText().isEmpty()||(clientNameField.getText().isEmpty())
+                    ||(eventTypeField.getText().isEmpty())||(startDateField.getText().isEmpty())
+                    ||endDateField.getText().isEmpty()||expNumAttendField.getText().isEmpty())
+                JOptionPane.showMessageDialog(null, "Data Missing");
+            else {
+                JOptionPane.showMessageDialog(null, "Data Submitted");
+                EventRequestForm form = new EventRequestForm(Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventTypeField.getText(),
+                                                            startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
+                                                            decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
+                                                            Integer.parseInt(expBudgetField.getText()));
             }
         });
 
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
+        btnCancel.addActionListener(e -> frame.dispose());
 
     }
 }
