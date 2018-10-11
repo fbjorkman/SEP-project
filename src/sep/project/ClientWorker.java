@@ -44,7 +44,7 @@ public class ClientWorker extends Server implements Runnable {
 
     private void addForm(Form f) {
         switch (f.receiver) {
-            case "SeniorCS":
+            case "GUISeniorCS":
                 addToList(SeniorCS, f);
             case "FinancialManager":
                 addToList(FinancialManager, f);
@@ -60,7 +60,7 @@ public class ClientWorker extends Server implements Runnable {
     private void sendPending(Form f) throws IOException {
         LinkedList<Form> list = new LinkedList<Form>();
         switch (f.sender) {
-            case "SeniorCS":
+            case "GUISeniorCS":
                 list = copyAndEmptyList(SeniorCS);
             case "FinancialManager":
                 list = copyAndEmptyList(FinancialManager);
