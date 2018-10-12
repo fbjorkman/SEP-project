@@ -8,3 +8,4 @@ Sender/receiver:
 type of Form:
 "Update" = just a request to get its pending forms from server
 "EventRequestForm"
+"FinancialRequestForm"

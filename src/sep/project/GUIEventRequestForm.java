@@ -2,8 +2,14 @@ package sep.project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GUIEventRequestForm {
+
     public JFrame frame;
     private JTextField recNumField;
     private JTextField clientNameField;
@@ -18,11 +24,11 @@ public class GUIEventRequestForm {
     private JCheckBox drinksCB;
     private JTextField expBudgetField;
 
-    public GUIEventRequestForm(){
+    public GUIEventRequestForm() {
         initialized();
     }
 
-    private void initialized(){
+    private void initialized() {
         frame = new JFrame();
         frame.setBounds(100, 100, 550, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +98,7 @@ public class GUIEventRequestForm {
         frame.getContentPane().add(decor);
 
         decorCB = new JCheckBox();
-        decorCB.setBounds(65, 297, 20 ,20);
+        decorCB.setBounds(65, 297, 20, 20);
         frame.getContentPane().add(decorCB);
 
         JLabel parties = new JLabel("Parties");
@@ -100,7 +106,7 @@ public class GUIEventRequestForm {
         frame.getContentPane().add(parties);
 
         partiesCB = new JCheckBox();
-        partiesCB.setBounds(65, 317, 20 ,20);
+        partiesCB.setBounds(65, 317, 20, 20);
         frame.getContentPane().add(partiesCB);
 
         JLabel photo = new JLabel("Photos/filming");
@@ -108,7 +114,7 @@ public class GUIEventRequestForm {
         frame.getContentPane().add(photo);
 
         photoCB = new JCheckBox();
-        photoCB.setBounds(65, 337, 20 ,20);
+        photoCB.setBounds(65, 337, 20, 20);
         frame.getContentPane().add(photoCB);
 
         JLabel food = new JLabel("Breakfast, lunch, dinner");
@@ -116,7 +122,7 @@ public class GUIEventRequestForm {
         frame.getContentPane().add(food);
 
         foodCB = new JCheckBox();
-        foodCB.setBounds(250, 297, 20 ,20);
+        foodCB.setBounds(250, 297, 20, 20);
         frame.getContentPane().add(foodCB);
 
         JLabel drinks = new JLabel("Soft/hot drinks");
@@ -124,7 +130,7 @@ public class GUIEventRequestForm {
         frame.getContentPane().add(drinks);
 
         drinksCB = new JCheckBox();
-        drinksCB.setBounds(250, 317, 20 ,20);
+        drinksCB.setBounds(250, 317, 20, 20);
         frame.getContentPane().add(drinksCB);
 
         JLabel expBudget = new JLabel("Expected budget:");
@@ -144,22 +150,34 @@ public class GUIEventRequestForm {
         btnCancel.setBounds(350, 430, 90, 25);
         frame.getContentPane().add(btnCancel);
 
+        btnSubmit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (recNumField.getText().isEmpty() || (clientNameField.getText().isEmpty())
+                        || (eventTypeField.getText().isEmpty()) || (startDateField.getText().isEmpty())
+                        || endDateField.getText().isEmpty() || expNumAttendField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Data Missing");
+                } else {
+                    sep.project.EventRequestForm f = new sep.project.EventRequestForm(Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventTypeField.getText(),
+                            startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
+                            decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
+                            Integer.parseInt(expBudgetField.getText()));
+                    ServerConnector s = new ServerConnector();
+                    try {
+                        s.sendForm(f);
+                    } catch (IOException ex) {
+                        Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(null, "Data Submitted");
+                }
 
-        btnSubmit.addActionListener(arg0 -> {
-            if(recNumField.getText().isEmpty()||(clientNameField.getText().isEmpty())
-                    ||(eventTypeField.getText().isEmpty())||(startDateField.getText().isEmpty())
-                    ||endDateField.getText().isEmpty()||expNumAttendField.getText().isEmpty())
-                JOptionPane.showMessageDialog(null, "Data Missing");
-            else {
-                JOptionPane.showMessageDialog(null, "Data Submitted");
-                EventRequestForm form = new EventRequestForm(Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventTypeField.getText(),
-                                                            startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
-                                                            decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
-                                                            Integer.parseInt(expBudgetField.getText()));
             }
         });
 
-        btnCancel.addActionListener(e -> frame.dispose());
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
 
     }
 }
