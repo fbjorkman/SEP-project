@@ -33,4 +33,13 @@ public class EventRequestForm extends sep.project.Form {
         this.drinks = drinks;
         this.expBudget = expBudget;
     }
+
+    public int getRecNum(){
+        return recNum;
+    }
+
+    @Override
+    public String toString() {
+        return ("Event #" + recNum);
+    }
 }
