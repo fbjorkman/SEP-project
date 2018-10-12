@@ -30,9 +30,21 @@ public class ClientWorker extends Server implements Runnable {
             Form f = (Form) inputStream.readObject();
             if (f.type.equals("Update")) {  // client sent in request for update
                 sendPending(f); // send pending forms to the client
-            } else {
+            }
+            else if (f.type.equals("EventRequestForm")) {
+                EventRequestForm e = (EventRequestForm) f;
+                if (e.id == 0) { // new event request
+                    e.id = getId();
+                    addForm(e);
+                }
+                else if (e.sender.equals("ProductionManager") || e.sender.equals("ServiceManager")){
+                    handleApproval(e);
+                }
+            }
+            else {
                 addForm(f); // add form to right user queue
             }
+            
             inputStream.close();
             client.close();
         } catch (IOException ex) {
@@ -74,5 +86,15 @@ public class ClientWorker extends Server implements Runnable {
         outputStream.writeObject(list);
         outputStream.flush();
         outputStream.close();
+    }
+    
+    private void handleApproval(EventRequestForm e){    // checks if event has been approved by two sub-team managers
+        if (pendingEvents.get(e.id) == null){   // first approval
+            pendingEvents.put(e.id, 1);
+        }
+        else{   // if already approved by one of the sub-team managers before
+            pendingEvents.remove(e.id);
+            addToList(AdminManager, e); // send to AdminManager
+        }
     }
 }

@@ -1,6 +1,7 @@
 package sep.project;
 
 public class EventRequestForm extends sep.project.Form {
+    public int id;
     private int recNum;
     private String clientName;
     private String eventType;
@@ -13,7 +14,6 @@ public class EventRequestForm extends sep.project.Form {
     private boolean food;
     private boolean drinks;
     private double expBudget;
-
     public EventRequestForm(int recNum, String clientName, String eventType,
                             String startDate, String endDate, int expNumAttend,
                             boolean decor, boolean parties, boolean photo, boolean food, boolean drinks,
