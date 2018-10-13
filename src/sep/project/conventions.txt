@@ -4,6 +4,7 @@ Sender/receiver:
 "AdminManager"
 "ProductionManager"
 "ServiceManager"
+"SeniorHRManager"
 
 type of Form:
 "Update" = just a request to get its pending forms from server
