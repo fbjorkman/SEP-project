@@ -18,6 +18,8 @@ public class User implements Runnable{
         this.name = name;
         this.notificationList  = new LinkedList<>();
         s = new ServerConnector();
+        seniorCS = new GUISeniorCS(notificationList);
+        seniorCS.frame.setVisible(true);
     }
     
     public void run(){
@@ -30,9 +32,8 @@ public class User implements Runnable{
         });
         updater.start();
         switch (name) {
-            case "SeniorCS" : {// display gui of SeniorCS homepage 
-                seniorCS = new GUISeniorCS(notificationList);
-                seniorCS.frame.setVisible(true);
+            case "SeniorCS" : {// display gui of SeniorCS homepage
+
             }
             
             case "FinancialManager" : {

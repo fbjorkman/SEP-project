@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 public class ClientWorker extends Server implements Runnable {
 
     private Socket client;
-    private ObjectInputStream inputStream = null;
-    private ObjectOutputStream outputStream = null;
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
 
     ClientWorker(Socket client) throws IOException {
         this.client = client;
