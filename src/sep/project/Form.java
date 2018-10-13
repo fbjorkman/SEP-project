@@ -17,30 +17,29 @@ public class Form implements Serializable {
         this.type = type;
     }
     
-    
     public String toString(){
         return "Type: " + type + ", Sender: " + sender + ", Receiver: " + receiver;
     }
     
     public void view(){  // receiver is the one viewing the form
+        System.out.println(type);
         switch (type){
             case "EventRequestForm":
                 EventRequestForm e = (EventRequestForm) this;
-                if (receiver.equals("SeniorCS")){
-                    e.viewForm();
-                }
-                else if (receiver.equals("FinancialManager")){
-                    // anropa metod som visar grafiskt anpassat för user, här ska ett gui med kommentarsfält visas
-                    //e.viewFinancial()
-                }
-                else {  // admin manager
-                    e.viewForm();   // admin kan också approve/reject
-                }
+                e.viewForm();
+                break;
             case "FinancialRequestForm":
                 FinancialRequestForm f = (FinancialRequestForm) this;
-                if (receiver.equals("FinancialManager")){
-
-                }
+                f.view();
+                break;
+            case "TaskForm":
+                TaskForm t = (TaskForm) this;
+                t.view();
+                break;
+            case "RecruitmentForm":
+                RecruitmentForm r = (RecruitmentForm) this;
+                r.view();
+                break;
         }
     }
 }

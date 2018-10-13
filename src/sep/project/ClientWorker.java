@@ -64,6 +64,8 @@ public class ClientWorker extends Server implements Runnable {
                 addToList(ServiceManager, f);
             case "SeniorHRManager":
                 addToList(SeniorHRManager, f);
+            case "Photography":
+                addToList(Photography, f);
         }
     }
 
@@ -82,6 +84,8 @@ public class ClientWorker extends Server implements Runnable {
                 list = copyAndEmptyList(ServiceManager);
             case "SeniorHRManager":
                 list = copyAndEmptyList(SeniorHRManager);
+            case "Photography":
+                list = copyAndEmptyList(Photography);
         }
         outputStream.writeObject(list);
         outputStream.flush();
