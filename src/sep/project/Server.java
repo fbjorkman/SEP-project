@@ -25,6 +25,7 @@ public class Server implements Runnable{
     static LinkedBlockingQueue<Form> ProductionManager = new LinkedBlockingQueue<>();
     static LinkedBlockingQueue<Form> ServiceManager = new LinkedBlockingQueue<>();
     static LinkedBlockingQueue<Form> SeniorHRManager = new LinkedBlockingQueue<>();
+    static LinkedBlockingQueue<Form> Photography = new LinkedBlockingQueue<>();
     
     public void run() {
         try {
