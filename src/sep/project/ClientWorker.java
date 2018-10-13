@@ -30,20 +30,19 @@ public class ClientWorker extends Server implements Runnable {
             Form f = (Form) inputStream.readObject();
             if (f.type.equals("Update")) {  // client sent in request for update
                 sendPending(f); // send pending forms to the client
+                return;
             }
             else if (f.type.equals("EventRequestForm")) {
                 EventRequestForm e = (EventRequestForm) f;
                 if (e.id == 0) { // new event request
                     e.id = getId();
-                    addForm(e);
                 }
                 else if (e.sender.equals("ProductionManager") || e.sender.equals("ServiceManager")){
                     handleApproval(e);
                 }
             }
-            else {
-                addForm(f); // add form to right user queue
-            }
+            addForm(f); // add form to right user queue
+            
             
             inputStream.close();
             client.close();
@@ -56,7 +55,7 @@ public class ClientWorker extends Server implements Runnable {
 
     private void addForm(Form f) {
         switch (f.receiver) {
-            case "GUISeniorCS":
+            case "SeniorCS":
                 addToList(SeniorCS, f);
             case "FinancialManager":
                 addToList(FinancialManager, f);
@@ -72,7 +71,7 @@ public class ClientWorker extends Server implements Runnable {
     private void sendPending(Form f) throws IOException {
         LinkedList<Form> list = new LinkedList<Form>();
         switch (f.sender) {
-            case "GUISeniorCS":
+            case "SeniorCS":
                 list = copyAndEmptyList(SeniorCS);
             case "FinancialManager":
                 list = copyAndEmptyList(FinancialManager);

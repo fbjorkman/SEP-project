@@ -5,11 +5,11 @@ package sep.project;
  * @author harald
  */
 public class FinancialRequestForm extends Form {
-    private String requestingDepartment;
-    private int projectReference;   // event id
-    private double amount;
-    private String reason;
-    private boolean approved;
+    public String requestingDepartment;
+    public int projectReference;   // event id
+    public double amount;
+    public String reason;
+    public boolean approved;
     
     public FinancialRequestForm(String sender, String requestingDepartment, int projectReference, double amount, String reason){
         super(sender, "FinancialManager", "FinancialRequestForm");
