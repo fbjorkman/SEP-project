@@ -54,10 +54,12 @@ public class GUISeniorCS {
         btnApprove = new JButton("Approve");
         btnApprove.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnApprove);
+        btnApprove.hide();
 
         btnReject = new JButton("Reject");
         btnReject.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnReject);
+        btnReject.hide();
 
         btnCreate.addActionListener(actionEvent -> {
             GUIEventRequestForm eventRequest = new GUIEventRequestForm();
@@ -76,22 +78,35 @@ public class GUISeniorCS {
 
         btnApprove.addActionListener(actionEvent -> {
             EventRequestForm selected = requestList.getSelectedValue();
+            formList.remove(selected);
+            updateGUI();
             if(!requestList.isSelectionEmpty())
                 JOptionPane.showMessageDialog(null, "Approved request: " + selected);
-            formList.remove(selected);
-            update();
         });
 
         btnReject.addActionListener(actionEvent -> {
             EventRequestForm selected = requestList.getSelectedValue();
+            formList.remove(selected);
+            updateGUI();
             if(!requestList.isSelectionEmpty())
                 JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
-            formList.remove(selected);
-            update();
+        });
+
+        requestList.addListSelectionListener(selectionEvent -> {
+            if(requestList.getSelectedValue() == null || requestList.getSelectedValue().isRejected()) {
+                if(btnApprove.isShowing()){
+                    btnApprove.hide();
+                    btnReject.hide();
+                }
+            }
+            else{
+                btnApprove.show();
+                btnReject.show();
+            }
         });
     }
 
-    public void update(){
+    public void updateGUI(){
         model.clear();
         if(formList != null) {
             for (EventRequestForm form : formList) {

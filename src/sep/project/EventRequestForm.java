@@ -20,6 +20,7 @@ public class EventRequestForm extends sep.project.Form {
     private boolean food;
     private boolean drinks;
     private double expBudget;
+    private boolean rejected;
     public EventRequestForm(int recNum, String clientName, String eventType,
                             String startDate, String endDate, int expNumAttend,
                             boolean decor, boolean parties, boolean photo, boolean food, boolean drinks,
@@ -38,6 +39,7 @@ public class EventRequestForm extends sep.project.Form {
         this.food = food;
         this.drinks = drinks;
         this.expBudget = expBudget;
+        this.rejected = false;
     }
 
     @Override
@@ -116,7 +118,6 @@ public class EventRequestForm extends sep.project.Form {
         expBudgetField.setBounds(65, 300, 400, 20);
         frame.getContentPane().add(expBudgetField);
 
-
         JButton btnClose = new JButton("Close");
         btnClose.setBounds(225, 400, 90, 25);
         frame.getContentPane().add(btnClose);
@@ -138,5 +139,13 @@ public class EventRequestForm extends sep.project.Form {
             preferences.add("Soft/hot drinks");
 
         return preferences;
+    }
+
+    public void reject(){
+        rejected = true;
+    }
+
+    public boolean isRejected() {
+        return rejected;
     }
 }
