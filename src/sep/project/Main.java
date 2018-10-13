@@ -31,9 +31,19 @@ public class Main implements Runnable {
                     s.sendForm(test3);
                     GUISeniorCS window2 = new GUISeniorCS();
                     window2.frame.setVisible(true);*/
-                    Thread seniorCS = new Thread(new User("SeniorCS"));
+                    /*Thread seniorCS = new Thread(new User("SeniorCS"));
                     seniorCS.start();
-                    User SeniorCS = new User("SeniorCS");
+                    User SeniorCS = new User("SeniorCS");*/
+
+                    GUIEventRequestForm a = new GUIEventRequestForm();
+                    a.frame.setVisible(true);
+                    ServerConnector sc = new ServerConnector();
+                    LinkedList<Form> l = new LinkedList<>();
+                    while (l.isEmpty()) {   // wait for reply, only used for testing purpose
+                        l = sc.getUpdate("SeniorCS");
+                    }
+                    Form f = l.getFirst();
+                    f.view();
 
                 } catch (Exception e) {
                     e.printStackTrace();

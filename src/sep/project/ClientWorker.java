@@ -54,16 +54,22 @@ public class ClientWorker extends Server implements Runnable {
         switch (f.receiver) {
             case "SeniorCS":
                 addToList(SeniorCS, f);
+                break;
             case "FinancialManager":
                 addToList(FinancialManager, f);
+                break;
             case "AdminManager":
                 addToList(AdminManager, f);
+                break;
             case "ProductionManager":
                 addToList(ProductionManager, f);
+                break;
             case "ServiceManager":
                 addToList(ServiceManager, f);
+                break;
             case "SeniorHRManager":
                 addToList(SeniorHRManager, f);
+                break;
             case "Photography":
                 addToList(Photography, f);
         }
@@ -74,16 +80,22 @@ public class ClientWorker extends Server implements Runnable {
         switch (f.sender) {
             case "SeniorCS":
                 list = copyAndEmptyList(SeniorCS);
+                break;
             case "FinancialManager":
                 list = copyAndEmptyList(FinancialManager);
+                break;
             case "AdminManager":
                 list = copyAndEmptyList(AdminManager);
+                break;
             case "ProductionManager":
                 list = copyAndEmptyList(ProductionManager);
+                break;
             case "ServiceManager":
                 list = copyAndEmptyList(ServiceManager);
+                break;
             case "SeniorHRManager":
                 list = copyAndEmptyList(SeniorHRManager);
+                break;
             case "Photography":
                 list = copyAndEmptyList(Photography);
         }
