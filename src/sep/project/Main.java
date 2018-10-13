@@ -1,6 +1,7 @@
 package sep.project;
 
 import java.awt.*;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main implements Runnable {
@@ -18,7 +19,7 @@ public class Main implements Runnable {
         try{
             EventQueue.invokeLater(() -> {
                 try {
-                    ServerConnector s = new ServerConnector();
+//                    ServerConnector s = new ServerConnector();
 //                    GUIEventRequestForm window1 = new GUIEventRequestForm();
 //                    window1.frame.setVisible(true);
                     /*EventRequestForm test1 = new EventRequestForm(1, "name1", "Birthday party","type1", "10/11", "11/10", 100, true, true, false, true, true, 10000);
@@ -32,7 +33,8 @@ public class Main implements Runnable {
                     window2.frame.setVisible(true);*/
                     Thread seniorCS = new Thread(new User("SeniorCS"));
                     seniorCS.start();
-                    User SeniorCS = new User("SEniorCS");
+                    User SeniorCS = new User("SeniorCS");
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

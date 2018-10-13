@@ -17,9 +17,10 @@ public class GUISeniorCS {
     private JList<Form> requestList;
     DefaultListModel<Form> model;
 
-    public GUISeniorCS(){ initialized();}
+    public GUISeniorCS(LinkedList<Form> formList){ initialized(formList);}
 
-    private void initialized(){
+    private void initialized(LinkedList<Form> formList){
+        this.formList = formList;
         frame = new JFrame();
         frame.setBounds(50, 50, 550, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

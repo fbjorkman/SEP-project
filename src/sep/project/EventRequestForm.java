@@ -26,7 +26,7 @@ public class EventRequestForm extends sep.project.Form {
                             String startDate, String endDate, int expNumAttend,
                             boolean decor, boolean parties, boolean photo, boolean food, boolean drinks,
                             double expBudget){
-        super("GUISeniorCS", "FinancialManager", "EventRequestForm");
+        super("GUISeniorCS", "SeniorCS", "EventRequestForm");
 
         this.recNum = recNum;
         this.clientName = clientName;

@@ -12,10 +12,11 @@ public class User implements Runnable{
     String name;
     LinkedList<Form> notificationList;
     ServerConnector s;
+    GUISeniorCS seniorCS;
     
     public User(String name){
         this.name = name;
-        this.notificationList  = new LinkedList<Form>();
+        this.notificationList  = new LinkedList<>();
         s = new ServerConnector();
     }
     
@@ -30,7 +31,7 @@ public class User implements Runnable{
         updater.start();
         switch (name) {
             case "SeniorCS" : {// display gui of SeniorCS homepage 
-                GUISeniorCS seniorCS = new GUISeniorCS();
+                seniorCS = new GUISeniorCS(notificationList);
                 seniorCS.frame.setVisible(true);
             }
             
@@ -45,6 +46,7 @@ public class User implements Runnable{
     public void requestUpdate() throws ClassNotFoundException, InterruptedException{
         while(true){
             notificationList.addAll(s.getUpdate(name)); // add all forms to my notificationList
+            seniorCS.updateGUI();
             Thread.sleep(1000);
         }
     }

@@ -160,35 +160,30 @@ public class GUIEventRequestForm {
         btnCancel.setBounds(350, 430, 90, 25);
         frame.getContentPane().add(btnCancel);
 
-        btnSubmit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if (recNumField.getText().isEmpty() || (clientNameField.getText().isEmpty())
-                        || (eventTypeField.getText().isEmpty()) || (startDateField.getText().isEmpty())
-                        || endDateField.getText().isEmpty() || expNumAttendField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Data Missing");
-                } else {
-                    sep.project.EventRequestForm f = new sep.project.EventRequestForm(
-                            Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventNameField.getText(), eventTypeField.getText(),
-                            startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
-                            decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
-                            Integer.parseInt(expBudgetField.getText()));
-                    ServerConnector s = new ServerConnector();
-                    try {
-                        s.sendForm(f);
-                    } catch (IOException ex) {
-                        Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    JOptionPane.showMessageDialog(null, "Data Submitted");
+        btnSubmit.addActionListener(arg0 -> {
+            if (recNumField.getText().isEmpty() || (clientNameField.getText().isEmpty())
+                    || (eventTypeField.getText().isEmpty()) || (startDateField.getText().isEmpty())
+                    || endDateField.getText().isEmpty() || expNumAttendField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Data Missing");
+            } else {
+                EventRequestForm f = new EventRequestForm(
+                        Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventNameField.getText(), eventTypeField.getText(),
+                        startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
+                        decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
+                        Integer.parseInt(expBudgetField.getText()));
+                ServerConnector s = new ServerConnector();
+                try {
+                    s.sendForm(f);
+                } catch (IOException ex) {
+                    Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-            }
-        });
-
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
                 frame.dispose();
+                JOptionPane.showMessageDialog(null, "Event request sent");
             }
+
         });
+
+        btnCancel.addActionListener(e -> frame.dispose());
 
     }
 }
