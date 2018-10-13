@@ -5,8 +5,11 @@ Sender/receiver:
 "ProductionManager"
 "ServiceManager"
 "SeniorHRManager"
+"Photography" // får bli vår subteam, jag orkar inte göra alla subteams
 
 type of Form:
 "Update" = just a request to get its pending forms from server
 "EventRequestForm"
 "FinancialRequestForm"
+"TaskForm"
+"RecruitmentForm"
