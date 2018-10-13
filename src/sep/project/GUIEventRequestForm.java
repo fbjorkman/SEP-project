@@ -167,7 +167,8 @@ public class GUIEventRequestForm {
                         || endDateField.getText().isEmpty() || expNumAttendField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Data Missing");
                 } else {
-                    sep.project.EventRequestForm f = new sep.project.EventRequestForm(Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventTypeField.getText(),
+                    sep.project.EventRequestForm f = new sep.project.EventRequestForm(
+                            Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventNameField.getText(), eventTypeField.getText(),
                             startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
                             decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
                             Integer.parseInt(expBudgetField.getText()));

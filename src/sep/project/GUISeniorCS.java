@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class GUISeniorCS {
@@ -12,13 +13,13 @@ public class GUISeniorCS {
     private JButton btnView;
     private JButton btnApprove;
     private JButton btnReject;
-    private LinkedBlockingQueue<Form> formList;
+    private LinkedList<Form> formList;
     private JList<Form> requestList;
     DefaultListModel<Form> model;
 
-    public GUISeniorCS(LinkedBlockingQueue<Form> formList){ initialized(formList);}
+    public GUISeniorCS(LinkedList<Form> formList){ initialized(formList);}
 
-    private void initialized(LinkedBlockingQueue<Form> formList){
+    private void initialized(LinkedList<Form> formList){
         this.formList = formList;
         frame = new JFrame();
         frame.setBounds(50, 50, 550, 500);
@@ -71,13 +72,13 @@ public class GUISeniorCS {
                 JOptionPane.showMessageDialog(null, "Select a request");
             }
             else{
-                EventRequestForm selected = requestList.getSelectedValue();
-                selected.viewForm();
+                Form selected = requestList.getSelectedValue();
+                selected.view();
             }
         });
 
         btnApprove.addActionListener(actionEvent -> {
-            EventRequestForm selected = requestList.getSelectedValue();
+            Form selected = requestList.getSelectedValue();
             formList.remove(selected);
             updateGUI();
             if(!requestList.isSelectionEmpty())
@@ -85,7 +86,7 @@ public class GUISeniorCS {
         });
 
         btnReject.addActionListener(actionEvent -> {
-            EventRequestForm selected = requestList.getSelectedValue();
+            Form selected = requestList.getSelectedValue();
             formList.remove(selected);
             updateGUI();
             if(!requestList.isSelectionEmpty())
@@ -93,15 +94,18 @@ public class GUISeniorCS {
         });
 
         requestList.addListSelectionListener(selectionEvent -> {
-            if(requestList.getSelectedValue() == null || requestList.getSelectedValue().isRejected()) {
-                if(btnApprove.isShowing()){
-                    btnApprove.hide();
-                    btnReject.hide();
+            Form selected = requestList.getSelectedValue();
+            if(selected.type.equals("EventRequestForm")) {
+                EventRequestForm eventRequestForm = (EventRequestForm) selected;
+                if (eventRequestForm.isRejected()) {
+                    if (btnApprove.isShowing()) {
+                        btnApprove.hide();
+                        btnReject.hide();
+                    }
+                } else {
+                    btnApprove.show();
+                    btnReject.show();
                 }
-            }
-            else{
-                btnApprove.show();
-                btnReject.show();
             }
         });
     }
@@ -109,7 +113,7 @@ public class GUISeniorCS {
     public void updateGUI(){
         model.clear();
         if(formList != null) {
-            for (EventRequestForm form : formList) {
+            for (Form form : formList) {
                 model.addElement(form);
             }
         }

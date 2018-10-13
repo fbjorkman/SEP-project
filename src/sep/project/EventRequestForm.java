@@ -22,7 +22,7 @@ public class EventRequestForm extends sep.project.Form {
     private boolean drinks;
     private double expBudget;
     private boolean rejected;
-    public EventRequestForm(int recNum, String clientName, String eventType, String eventName,
+    public EventRequestForm(int recNum, String clientName, String eventName,String eventType,
                             String startDate, String endDate, int expNumAttend,
                             boolean decor, boolean parties, boolean photo, boolean food, boolean drinks,
                             double expBudget){
@@ -30,6 +30,7 @@ public class EventRequestForm extends sep.project.Form {
 
         this.recNum = recNum;
         this.clientName = clientName;
+        this.eventName = eventName;
         this.eventType = eventType;
         this.startDate = startDate;
         this.endDate = endDate;

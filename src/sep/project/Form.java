@@ -39,7 +39,7 @@ public class Form implements Serializable {
             case "FinancialRequestForm":
                 FinancialRequestForm f = (FinancialRequestForm) this;
                 if (receiver.equals("FinancialManager")){
-                    f.reviewForm();
+
                 }
         }
     }
