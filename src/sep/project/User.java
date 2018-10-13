@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  *
  * @author harald
  */
-public class User {
+public class User implements Runnable{
     String name;
     LinkedList<Form> notificationList;
     ServerConnector s;
@@ -30,7 +30,8 @@ public class User {
         updater.start();
         switch (name) {
             case "SeniorCS" : {// display gui of SeniorCS homepage 
-            
+                GUISeniorCS seniorCS = new GUISeniorCS();
+                seniorCS.frame.setVisible(true);
             }
             
             case "FinancialManager" : {
