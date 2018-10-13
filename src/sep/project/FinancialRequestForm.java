@@ -23,4 +23,9 @@ public class FinancialRequestForm extends Form {
         super.receiver = receiver;
         approved = decision;
     }
+    
+    public void view(){
+        GUIViewFinancialRequest gui = new GUIViewFinancialRequest(this);
+        gui.setVisible(true);
+    }
 }

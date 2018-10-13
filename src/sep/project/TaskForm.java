@@ -23,4 +23,9 @@ public class TaskForm extends Form{
         this.budget = budget;
     }
     
+    public void view(){
+        GUIViewTaskForm gui = new GUIViewTaskForm(this);
+        gui.setVisible(true);
+    }
+    
 }

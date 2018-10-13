@@ -103,7 +103,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
             }
         });
 
-        jobTitleLabel.setText("Job titile:");
+        jobTitleLabel.setText("Job title:");
 
         jobTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,9 +192,9 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
                     .addComponent(serviceButton)
                     .addComponent(financialButton))
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(experienceLabel)
-                    .addComponent(experience, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(experienceLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(experience, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jobTitleLabel)
@@ -212,11 +212,11 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fullTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullTimeButtonActionPerformed
-        // TODO add your handling code here:
+        contractType = "Full time";
     }//GEN-LAST:event_fullTimeButtonActionPerformed
 
     private void partTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partTimeButtonActionPerformed
-        // TODO add your handling code here:
+        contractType = "Part time";
     }//GEN-LAST:event_partTimeButtonActionPerformed
 
     private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
@@ -253,7 +253,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
         if (sender.isEmpty() || description.getText().isEmpty() || jobTitle.getText().isEmpty() || experience.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Data Missing");
         } else {
-            RecruitmentForm r = new RecruitmentForm(sender, department, experience.getText(), jobTitle.getText(),  description.getText());
+            RecruitmentForm r = new RecruitmentForm(sender, department, experience.getText(), jobTitle.getText(), description.getText(), contractType);
             try {
                 s.sendForm(r);
             } catch (IOException ex) {
@@ -263,43 +263,10 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIRecruitmentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIRecruitmentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIRecruitmentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIRecruitmentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIRecruitmentForm().setVisible(true);
-            }
-        });
-    }
     private final ServerConnector s = new ServerConnector();
     private String department;
     private String sender;
+    private String contractType;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton adminButton;
     private javax.swing.JLabel buttonGroupTitle;
