@@ -13,6 +13,7 @@ public class GUIEventRequestForm {
     public JFrame frame;
     private JTextField recNumField;
     private JTextField clientNameField;
+    private JTextField eventNameField;
     private JTextField eventTypeField;
     private JTextField startDateField;
     private JTextField endDateField;
@@ -48,20 +49,29 @@ public class GUIEventRequestForm {
         recNumField.setColumns(10);
 
         JLabel clientName = new JLabel("Client name");
-        clientName.setBounds(65, 110, 88, 14);
+        clientName.setBounds(65, 100, 88, 14);
         frame.getContentPane().add(clientName);
 
         clientNameField = new JTextField();
-        clientNameField.setBounds(200, 110, 250, 20);
+        clientNameField.setBounds(200, 100, 250, 20);
         frame.getContentPane().add(clientNameField);
         clientNameField.setColumns(10);
 
+        JLabel eventName = new JLabel("Event name");
+        eventName.setBounds(65, 130, 90, 14);
+        frame.getContentPane().add(eventName);
+
+        eventNameField = new JTextField();
+        eventNameField.setBounds(200, 130, 250, 20);
+        frame.getContentPane().add(eventNameField);
+        eventNameField.setColumns(10);
+
         JLabel eventType = new JLabel("Event type");
-        eventType.setBounds(65, 150, 80, 14);
+        eventType.setBounds(65, 160, 80, 14);
         frame.getContentPane().add(eventType);
 
         eventTypeField = new JTextField();
-        eventTypeField.setBounds(200, 150, 250, 20);
+        eventTypeField.setBounds(200, 160, 250, 20);
         frame.getContentPane().add(eventTypeField);
         eventTypeField.setColumns(10);
 

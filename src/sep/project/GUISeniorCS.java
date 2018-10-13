@@ -12,13 +12,13 @@ public class GUISeniorCS {
     private JButton btnView;
     private JButton btnApprove;
     private JButton btnReject;
-    private LinkedBlockingQueue<EventRequestForm> formList;
-    private JList<EventRequestForm> requestList;
-    DefaultListModel<EventRequestForm> model;
+    private LinkedBlockingQueue<Form> formList;
+    private JList<Form> requestList;
+    DefaultListModel<Form> model;
 
-    public GUISeniorCS(LinkedBlockingQueue<EventRequestForm> formList){ initialized(formList);}
+    public GUISeniorCS(LinkedBlockingQueue<Form> formList){ initialized(formList);}
 
-    private void initialized(LinkedBlockingQueue<EventRequestForm> formList){
+    private void initialized(LinkedBlockingQueue<Form> formList){
         this.formList = formList;
         frame = new JFrame();
         frame.setBounds(50, 50, 550, 500);
@@ -41,7 +41,7 @@ public class GUISeniorCS {
         requestList = new JList<>(model);
         requestList.setBounds(100, 100, 300, 300);
         if(formList != null) {
-            for (EventRequestForm form : formList) {
+            for (Form form : formList) {
                 model.addElement(form);
             }
         }
