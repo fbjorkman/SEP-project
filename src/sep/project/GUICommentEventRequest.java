@@ -25,6 +25,7 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
     public void createUserView(boolean showComments) {
         recordNumber.setText(Integer.toString(e.recNum));
         clientName.setText(e.clientName);
+        eventName.setText(e.eventName);
         eventType.setText(e.eventType);
         startDate.setText(e.startDate);
         endDate.setText(e.endDate);
@@ -167,7 +168,7 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
 
         preferences.setText("preferences");
 
-        decision.setFont(new java.awt.Font("Lucida Console", 1, 36)); // NOI18N
+        decision.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
         decision.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         decision.setText("decision");
 
@@ -213,7 +214,7 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
                         .addGap(221, 221, 221)
                         .addComponent(submitButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(165, 165, 165)
+                        .addGap(188, 188, 188)
                         .addComponent(decision)))
                 .addContainerGap(131, Short.MAX_VALUE))
         );
@@ -260,7 +261,7 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
                 .addComponent(submitButton)
                 .addGap(18, 18, 18)
                 .addComponent(decision)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         pack();

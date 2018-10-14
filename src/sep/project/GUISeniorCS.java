@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GUISeniorCS {
+
     public JFrame frame;
     private JButton btnCreate;
     private JButton btnView;
@@ -21,9 +22,11 @@ public class GUISeniorCS {
     private final ServerConnector sc = new ServerConnector();
     DefaultListModel<Form> model;
 
-    public GUISeniorCS(LinkedList<Form> formList){ initialized(formList);}
+    public GUISeniorCS(LinkedList<Form> formList) {
+        initialized(formList);
+    }
 
-    private void initialized(LinkedList<Form> formList){
+    private void initialized(LinkedList<Form> formList) {
         this.formList = formList;
         frame = new JFrame();
         frame.setBounds(50, 50, 550, 500);
@@ -45,7 +48,7 @@ public class GUISeniorCS {
         model = new DefaultListModel<>();
         requestList = new JList<>(model);
         requestList.setBounds(100, 100, 300, 300);
-        if(formList != null) {
+        if (formList != null) {
             for (Form form : formList) {
                 model.addElement(form);
             }
@@ -72,10 +75,9 @@ public class GUISeniorCS {
         });
 
         btnView.addActionListener(actionEvent -> {
-            if(requestList.isSelectionEmpty()){
+            if (requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Select a request");
-            }
-            else{
+            } else {
                 Form selected = requestList.getSelectedValue();
                 selected.view();
             }
@@ -91,44 +93,54 @@ public class GUISeniorCS {
                 Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
             }
             formList.remove(selected);
-            //model.removeElement(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
             updateGUI();
-            if(!requestList.isSelectionEmpty())
+            if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Approved request: " + selected);
+            }
         });
 
         btnReject.addActionListener(actionEvent -> {
             Form selected = requestList.getSelectedValue();
             formList.remove(selected);
-            //model.removeElement(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
             updateGUI();
-            if(!requestList.isSelectionEmpty())
+            if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
+            }
         });
 
         requestList.addListSelectionListener(selectionEvent -> {
-            Form selected = requestList.getSelectedValue();
-            if(selected.type.equals("EventRequestForm")) {
-                EventRequestForm eventRequestForm = (EventRequestForm) selected;
-                if (eventRequestForm.isRejected() || eventRequestForm.isApproved()) {
-                    if (btnApprove.isShowing()) {
-                        btnApprove.hide();
-                        btnReject.hide();
+            try {
+                Form selected = requestList.getSelectedValue();
+                if (selected.type.equals("EventRequestForm")) {
+                    EventRequestForm eventRequestForm = (EventRequestForm) selected;
+                    if (eventRequestForm.isRejected() || eventRequestForm.isApproved()) {
+                        if (btnApprove.isShowing()) {
+                            btnApprove.hide();
+                            btnReject.hide();
+                        }
+                    } else {
+                        btnApprove.show();
+                        btnReject.show();
                     }
-                } else {
-                    btnApprove.show();
-                    btnReject.show();
                 }
+            } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown
+                requestList.clearSelection();   // unselect
             }
+
         });
     }
 
-    public void updateGUI(){
+    public void updateGUI() {
         //model.clear();
-        if(formList != null) {
+        if (formList != null) {
             for (Form form : formList) {
-                if (!model.contains(form))
+                if (!model.contains(form)) {
                     model.addElement(form);
+                }
             }
         }
         frame.getContentPane().add(requestList);

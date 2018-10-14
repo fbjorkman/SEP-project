@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GUIFinancialManager {
+
     public JFrame frame;
     private JButton btnView;
     private JButton btnApprove;
@@ -59,13 +60,12 @@ public class GUIFinancialManager {
         btnReject.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnReject);
         btnReject.hide();
-        
 
         btnComment = new JButton("Comment");
         btnComment.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnComment);
         btnComment.hide();
-        
+
         btnView.addActionListener(actionEvent -> {
             if (requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Select a request");
@@ -86,7 +86,8 @@ public class GUIFinancialManager {
                 Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
             }
             formList.remove(selected);
-            //model.removeElement(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
             updateGUI();
             if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Approved request: " + selected);
@@ -104,7 +105,8 @@ public class GUIFinancialManager {
                 Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
             }
             formList.remove(selected);
-            //model.removeElement(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
             updateGUI();
             if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
@@ -117,19 +119,22 @@ public class GUIFinancialManager {
         });
 
         requestList.addListSelectionListener(selectionEvent -> {
-            
-            Form selected = requestList.getSelectedValue();
-            if (selected.type.equals("FinancialRequestForm")) {
-                btnApprove.show();
-                btnReject.show();
-                btnComment.hide();
+            try {
+                Form selected = requestList.getSelectedValue();
+                if (selected.type.equals("FinancialRequestForm")) {
+                    btnApprove.show();
+                    btnReject.show();
+                    btnComment.hide();
 
-            } else {    // EventRequestForm
-                btnApprove.hide();
-                btnReject.hide();
-                btnComment.show();
+                } else {    // EventRequestForm
+                    btnApprove.hide();
+                    btnReject.hide();
+                    btnComment.show();
+                }
+            } catch (NullPointerException e) {  // when selected has been submitted and removed, nullpointer exception will be thrown
+                requestList.clearSelection();   // unselect
             }
-            
+
         });
 
     }

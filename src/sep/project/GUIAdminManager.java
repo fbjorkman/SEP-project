@@ -82,17 +82,12 @@ public class GUIAdminManager {
                 Logger.getLogger(GUIAdminManager.class.getName()).log(Level.SEVERE, null, ex);
             }
             formList.remove(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
             updateGUI();
             if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Approved request: " + selected);
             }
-            ServerConnector s = new ServerConnector();
-            try {
-                s.sendForm(selected);
-            } catch (IOException ex) {
-                Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            frame.dispose();
         });
 
         btnReject.addActionListener(actionEvent -> {
@@ -103,6 +98,8 @@ public class GUIAdminManager {
                 Logger.getLogger(GUIAdminManager.class.getName()).log(Level.SEVERE, null, ex);
             }
             formList.remove(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
             updateGUI();
             if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
@@ -110,33 +107,37 @@ public class GUIAdminManager {
         });
 
         requestList.addListSelectionListener(selectionEvent -> {
-            Form selected = requestList.getSelectedValue();
-            if (selected.type.equals("EventRequestForm")) {
-                EventRequestForm eventRequestForm = (EventRequestForm) selected;
-                if (eventRequestForm.isRejected()) {
-                    if (btnApprove.isShowing()) {
-                        btnApprove.hide();
-                        btnReject.hide();
+            try {
+                Form selected = requestList.getSelectedValue();
+                if (selected.type.equals("EventRequestForm")) {
+                    EventRequestForm eventRequestForm = (EventRequestForm) selected;
+                    if (eventRequestForm.isRejected()) {
+                        if (btnApprove.isShowing()) {
+                            btnApprove.hide();
+                            btnReject.hide();
+                        }
+                    } else {
+                        btnApprove.show();
+                        btnReject.show();
                     }
-                } else {
-                    btnApprove.show();
-                    btnReject.show();
                 }
+            } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown
+                requestList.clearSelection();// just unselect then
             }
+
         });
     }
-    
-    private void sendDecision(EventRequestForm e, boolean approved) throws IOException{
+
+    private void sendDecision(EventRequestForm e, boolean approved) throws IOException {
         e.sender = "AdminManager";
         e.receiver = "SeniorCS";
-        if (approved){
-          e.approve();
-        }
-        else{
-          e.reject();  
+        if (approved) {
+            e.approve();
+        } else {
+            e.reject();
         }
         sc.sendForm(e);
-        
+
     }
 
     public void updateGUI() {
