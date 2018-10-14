@@ -40,7 +40,7 @@ public class GUIViewRecruitmentRequest extends javax.swing.JFrame {
         contractType = new javax.swing.JLabel();
         requestingDeparment = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         contractTypeLabel.setText("Contract type:");
 

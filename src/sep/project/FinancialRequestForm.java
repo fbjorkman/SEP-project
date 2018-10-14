@@ -9,7 +9,7 @@ public class FinancialRequestForm extends Form {
     public int projectReference;   // event id
     public double amount;
     public String reason;
-    public boolean approved;
+    public int approved;
     
     public FinancialRequestForm(String sender, String requestingDepartment, int projectReference, double amount, String reason){
         super(sender, "FinancialManager", "FinancialRequestForm");
@@ -19,13 +19,16 @@ public class FinancialRequestForm extends Form {
         this.reason = reason;    
     }
     
-    public void replyToRequest(String receiver, boolean decision){
-        super.receiver = receiver;
-        approved = decision;
-    }
-    
     public void view(){
         GUIViewFinancialRequest gui = new GUIViewFinancialRequest(this);
         gui.setVisible(true);
+    }
+    
+    public void approve(){
+        this.approved = 1;
+    }
+    
+    public void reject(){
+        this.approved = -1;
     }
 }

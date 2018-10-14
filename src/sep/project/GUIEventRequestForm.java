@@ -32,7 +32,7 @@ public class GUIEventRequestForm {
     private void initialized() {
         frame = new JFrame();
         frame.setBounds(100, 100, 550, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JLabel title = new JLabel("Request for Event Planning");
@@ -169,7 +169,7 @@ public class GUIEventRequestForm {
                 EventRequestForm f = new EventRequestForm(
                         Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventNameField.getText(), eventTypeField.getText(),
                         startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
-                        decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
+                        decorCB.isSelected(), partiesCB.isSelected(), photoCB.isSelected(), foodCB.isSelected(), drinksCB.isSelected(),
                         Integer.parseInt(expBudgetField.getText()), "");
                 ServerConnector s = new ServerConnector();
                 try {

@@ -1,22 +1,31 @@
 package sep.project;
 
+import java.io.IOException;
 import javax.swing.*;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GUIFinancialManager {
     public JFrame frame;
     private JButton btnView;
+    private JButton btnApprove;
+    private JButton btnReject;
+    private JButton btnComment;
     private LinkedList<Form> formList;
     private JList<Form> requestList;
+    private final ServerConnector sc = new ServerConnector();
     DefaultListModel<Form> model;
 
-    public GUIFinancialManager(LinkedList<Form> formList){ initialized(formList);}
+    public GUIFinancialManager(LinkedList<Form> formList) {
+        initialized(formList);
+    }
 
-    private void initialized(LinkedList<Form> formList){
+    private void initialized(LinkedList<Form> formList) {
         this.formList = formList;
         frame = new JFrame();
         frame.setBounds(70, 50, 550, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JLabel title = new JLabel("Logged in as Financial manager");
@@ -30,7 +39,7 @@ public class GUIFinancialManager {
         model = new DefaultListModel<>();
         requestList = new JList<>(model);
         requestList.setBounds(100, 80, 300, 300);
-        if(formList != null) {
+        if (formList != null) {
             for (Form form : formList) {
                 model.addElement(form);
             }
@@ -41,24 +50,97 @@ public class GUIFinancialManager {
         btnView.setBounds(100, 420, 100, 20);
         frame.getContentPane().add(btnView);
 
+        btnApprove = new JButton("Approve");
+        btnApprove.setBounds(210, 420, 100, 20);
+        frame.getContentPane().add(btnApprove);
+        btnApprove.hide();
 
+        btnReject = new JButton("Reject");
+        btnReject.setBounds(320, 420, 100, 20);
+        frame.getContentPane().add(btnReject);
+        btnReject.hide();
+        
+
+        btnComment = new JButton("Comment");
+        btnComment.setBounds(210, 420, 100, 20);
+        frame.getContentPane().add(btnComment);
+        btnComment.hide();
+        
         btnView.addActionListener(actionEvent -> {
-            if(requestList.isSelectionEmpty()){
+            if (requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Select a request");
-            }
-            else{
+            } else {
                 Form selected = requestList.getSelectedValue();
                 selected.view();
             }
         });
 
+        btnApprove.addActionListener(actionEvent -> {
+            FinancialRequestForm selected = (FinancialRequestForm) requestList.getSelectedValue();
+            selected.receiver = selected.sender;    // reply back to the sender
+            selected.sender = "FinancialManager";
+            selected.approve();
+            try {
+                sc.sendForm(selected);
+            } catch (IOException ex) {
+                Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            formList.remove(selected);
+            //model.removeElement(selected);
+            updateGUI();
+            if (!requestList.isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null, "Approved request: " + selected);
+            }
+        });
+
+        btnReject.addActionListener(actionEvent -> {
+            FinancialRequestForm selected = (FinancialRequestForm) requestList.getSelectedValue();
+            selected.receiver = selected.sender;    // reply back to the sender
+            selected.sender = "FinancialManager";
+            selected.reject();
+            try {
+                sc.sendForm(selected);
+            } catch (IOException ex) {
+                Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            formList.remove(selected);
+            //model.removeElement(selected);
+            updateGUI();
+            if (!requestList.isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
+            }
+        });
+
+        btnComment.addActionListener(actionEvent -> {
+            EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
+            selected.comment();
+        });
+
+        requestList.addListSelectionListener(selectionEvent -> {
+            
+            Form selected = requestList.getSelectedValue();
+            if (selected.type.equals("FinancialRequestForm")) {
+                btnApprove.show();
+                btnReject.show();
+                btnComment.hide();
+
+            } else {    // EventRequestForm
+                btnApprove.hide();
+                btnReject.hide();
+                btnComment.show();
+            }
+            
+        });
+
     }
 
-    public void updateGUI(){
-        model.clear();
-        if(formList != null) {
+    public void updateGUI() {
+        //model.clear();
+        if (formList != null) {
             for (Form form : formList) {
-                model.addElement(form);
+                if (!model.contains(form)) {
+                    model.addElement(form);
+                }
             }
         }
         frame.getContentPane().add(requestList);

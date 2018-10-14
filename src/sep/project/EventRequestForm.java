@@ -1,10 +1,7 @@
 package sep.project;
 
-import sun.misc.JavaLangAccess;
-
 import javax.swing.*;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,22 +9,22 @@ import java.util.logging.Logger;
 
 public class EventRequestForm extends sep.project.Form {
     public int id;
-    private int recNum;
-    private String clientName;
-    private String eventName;
-    private String eventType;
-    private String startDate;
-    private String endDate;
-    private int expNumAttend;
-    private boolean decor;
-    private boolean parties;
-    private boolean photo;
-    private boolean food;
-    private boolean drinks;
-    private double expBudget;
-    private boolean rejected;
-    private boolean approved;
-    private String comment;
+    public int recNum;
+    public String clientName;
+    public String eventName;
+    public String eventType;
+    public String startDate;
+    public String endDate;
+    public int expNumAttend;
+    public boolean decor;
+    public boolean parties;
+    public boolean photo;
+    public boolean food;
+    public boolean drinks;
+    public double expBudget;
+    public boolean rejected;
+    public boolean approved;
+    public String comment;
     public EventRequestForm(int recNum, String clientName, String eventName,String eventType,
                             String startDate, String endDate, int expNumAttend,
                             boolean decor, boolean parties, boolean photo, boolean food, boolean drinks,
@@ -62,7 +59,7 @@ public class EventRequestForm extends sep.project.Form {
         JFrame frame = new JFrame();
         frame.setVisible(true);
         frame.setBounds(200, 200, 550, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JLabel title = new JLabel(toString());
@@ -129,46 +126,6 @@ public class EventRequestForm extends sep.project.Form {
         expBudgetField.setBounds(65, 300, 400, 20);
         frame.getContentPane().add(expBudgetField);
 
-        switch (receiver){
-            case "FinancialManager":
-                JLabel newComment = new JLabel("Comment: ");
-                newComment.setBounds(65, 320, 400, 20);
-                frame.getContentPane().add(newComment);
-
-                JTextArea commentArea = new JTextArea();
-                commentArea.setBounds(150, 325, 300, 50);
-                frame.getContentPane().add(commentArea);
-
-                JButton btnSend = new JButton("Send");
-                btnSend.setBounds(350, 400, 90, 25);
-                frame.getContentPane().add(btnSend);
-
-                btnSend.addActionListener(actionEvent -> {
-                    EventRequestForm form = new EventRequestForm(
-                            recNum, clientName, eventName, eventType, startDate, endDate, expNumAttend,
-                            decor, parties, photo, food, drinks, expBudget, commentArea.getText());
-                    form.sender = "GUIFinancialManager";
-                    form.receiver = "AdminManager";
-                    ServerConnector s = new ServerConnector();
-                    try {
-                        s.sendForm(form);
-                    } catch (IOException ex) {
-                        Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    frame.dispose();
-                    JOptionPane.showMessageDialog(null, "Event request sent");
-                });
-                break;
-            case "AdminManager":
-                JLabel viewComment = new JLabel("Comment: ");
-                viewComment.setBounds(65, 320, 400, 20);
-                frame.getContentPane().add(viewComment);
-
-                JLabel commentText = new JLabel(comment);
-                commentText.setBounds(150, 320, 400, 20);
-                frame.getContentPane().add(commentText);
-        }
-
         JButton btnClose = new JButton("Close");
         btnClose.setBounds(225, 400, 90, 25);
         frame.getContentPane().add(btnClose);
@@ -206,5 +163,9 @@ public class EventRequestForm extends sep.project.Form {
 
     public boolean isApproved() {
         return approved;
+    }
+    
+    public void comment(){
+        new GUICommentEventRequest(this).setVisible(true);
     }
 }

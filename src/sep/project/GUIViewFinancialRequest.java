@@ -20,6 +20,13 @@ public class GUIViewFinancialRequest extends javax.swing.JFrame {
         projectReference.setText(Integer.toString(form.projectReference));
         requiredAmount.setText(Double.toString(form.amount));
         reason.setText(form.reason);
+        setStatus(form.approved);
+    }
+    
+    private void setStatus(int approved){
+        if (approved > 0) status.setText("Approved");
+        if (approved == 0) status.setText("Pending");
+        else status.setText("Rejected");
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -35,8 +42,10 @@ public class GUIViewFinancialRequest extends javax.swing.JFrame {
         reasonLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         reason = new javax.swing.JTextArea();
+        statusLabel = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         requestingDepartmentLabel.setText("Requesting department:");
 
@@ -61,6 +70,10 @@ public class GUIViewFinancialRequest extends javax.swing.JFrame {
         reason.setRows(5);
         jScrollPane1.setViewportView(reason);
 
+        statusLabel.setText("Status:");
+
+        status.setText("status");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -73,13 +86,15 @@ public class GUIViewFinancialRequest extends javax.swing.JFrame {
                             .addComponent(requestingDepartmentLabel)
                             .addComponent(projectReferenceLabel)
                             .addComponent(requiredAmountLabel)
-                            .addComponent(reasonLabel))
+                            .addComponent(reasonLabel)
+                            .addComponent(statusLabel))
                         .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(requiredAmount)
                             .addComponent(projectReference)
-                            .addComponent(requestingDepartment)))
+                            .addComponent(requestingDepartment)
+                            .addComponent(status)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(133, 133, 133)
                         .addComponent(title)))
@@ -106,7 +121,11 @@ public class GUIViewFinancialRequest extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(reasonLabel)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(statusLabel)
+                    .addComponent(status))
+                .addGap(57, 57, 57))
         );
 
         pack();
@@ -126,6 +145,8 @@ public class GUIViewFinancialRequest extends javax.swing.JFrame {
     private javax.swing.JLabel requestingDepartmentLabel;
     private javax.swing.JLabel requiredAmount;
     private javax.swing.JLabel requiredAmountLabel;
+    private javax.swing.JLabel status;
+    private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

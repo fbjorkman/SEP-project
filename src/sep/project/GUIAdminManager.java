@@ -21,7 +21,7 @@ public class GUIAdminManager {
         this.formList = formList;
         frame = new JFrame();
         frame.setBounds(50, 50, 550, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JLabel title = new JLabel("Logged in as AdminManager");

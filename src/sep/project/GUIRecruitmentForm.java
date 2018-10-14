@@ -45,7 +45,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
         description = new javax.swing.JTextArea();
         submitButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Recruitment Request");
 

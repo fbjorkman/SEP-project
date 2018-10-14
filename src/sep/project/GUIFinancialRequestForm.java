@@ -40,7 +40,7 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
         reasonField = new javax.swing.JTextArea();
         submitButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         title.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

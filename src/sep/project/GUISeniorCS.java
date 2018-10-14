@@ -4,8 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GUISeniorCS {
     public JFrame frame;
@@ -15,6 +18,7 @@ public class GUISeniorCS {
     private JButton btnReject;
     private LinkedList<Form> formList;
     private JList<Form> requestList;
+    private final ServerConnector sc = new ServerConnector();
     DefaultListModel<Form> model;
 
     public GUISeniorCS(LinkedList<Form> formList){ initialized(formList);}
@@ -23,7 +27,7 @@ public class GUISeniorCS {
         this.formList = formList;
         frame = new JFrame();
         frame.setBounds(50, 50, 550, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JLabel title = new JLabel("Logged in as SeniorCS");
@@ -79,9 +83,15 @@ public class GUISeniorCS {
 
         btnApprove.addActionListener(actionEvent -> {
             Form selected = requestList.getSelectedValue();
-            selected.sender = "GUISeniorCS";
+            selected.sender = "SeniorCS";
             selected.receiver = "FinancialManager";
+            try {
+                sc.sendForm(selected);
+            } catch (IOException ex) {
+                Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
+            }
             formList.remove(selected);
+            //model.removeElement(selected);
             updateGUI();
             if(!requestList.isSelectionEmpty())
                 JOptionPane.showMessageDialog(null, "Approved request: " + selected);
@@ -90,6 +100,7 @@ public class GUISeniorCS {
         btnReject.addActionListener(actionEvent -> {
             Form selected = requestList.getSelectedValue();
             formList.remove(selected);
+            //model.removeElement(selected);
             updateGUI();
             if(!requestList.isSelectionEmpty())
                 JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
@@ -113,10 +124,11 @@ public class GUISeniorCS {
     }
 
     public void updateGUI(){
-        model.clear();
+        //model.clear();
         if(formList != null) {
             for (Form form : formList) {
-                model.addElement(form);
+                if (!model.contains(form))
+                    model.addElement(form);
             }
         }
         frame.getContentPane().add(requestList);
