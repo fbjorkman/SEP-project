@@ -308,6 +308,6 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
     private javax.swing.JLabel preferences;
     private javax.swing.JLabel recordNumber;
     private javax.swing.JLabel startDate;
-    private javax.swing.JButton submitButton;
+    public javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }

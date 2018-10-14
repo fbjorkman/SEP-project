@@ -17,6 +17,7 @@ public class GUISeniorCS {
     private JButton btnView;
     private JButton btnApprove;
     private JButton btnReject;
+    private JButton btnDelete;
     private LinkedList<Form> formList;
     private JList<Form> requestList;
     private final ServerConnector sc = new ServerConnector();
@@ -59,14 +60,22 @@ public class GUISeniorCS {
         btnView.setBounds(100, 420, 100, 20);
         frame.getContentPane().add(btnView);
 
+        btnDelete = new JButton("Delete");
+        btnDelete.setBounds(210, 420, 100, 20);
+        frame.getContentPane().add(btnDelete);
+        btnDelete.setBackground(Color.red);
+        btnDelete.hide();
+
         btnApprove = new JButton("Approve");
         btnApprove.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnApprove);
+        btnApprove.setBackground(Color.green);
         btnApprove.hide();
 
         btnReject = new JButton("Reject");
         btnReject.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnReject);
+        btnReject.setBackground(Color.red);
         btnReject.hide();
 
         btnCreate.addActionListener(actionEvent -> {
@@ -112,16 +121,26 @@ public class GUISeniorCS {
             }
         });
 
+        btnDelete.addActionListener(actionEvent -> {
+            Form selected = requestList.getSelectedValue();
+            JOptionPane.showMessageDialog(null, "Deleting: " + selected);
+            formList.remove(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
+            updateGUI();
+        });
+
         requestList.addListSelectionListener(selectionEvent -> {
             try {
                 Form selected = requestList.getSelectedValue();
                 if (selected.type.equals("EventRequestForm")) {
                     EventRequestForm eventRequestForm = (EventRequestForm) selected;
                     if (eventRequestForm.isRejected() || eventRequestForm.isApproved()) {
-                        if (btnApprove.isShowing()) {
-                            btnApprove.hide();
-                            btnReject.hide();
-                        }
+                        //if (btnApprove.isShowing()) {
+                        btnDelete.show();
+                        btnApprove.hide();
+                        btnReject.hide();
+                        //}
                     } else {
                         btnApprove.show();
                         btnReject.show();

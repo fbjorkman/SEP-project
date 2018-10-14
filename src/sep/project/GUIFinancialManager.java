@@ -1,5 +1,6 @@
 package sep.project;
 
+import java.awt.Color;
 import java.io.IOException;
 import javax.swing.*;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ public class GUIFinancialManager {
     private JList<Form> requestList;
     private final ServerConnector sc = new ServerConnector();
     DefaultListModel<Form> model;
+    GUICommentEventRequest commentGUI;
 
     public GUIFinancialManager(LinkedList<Form> formList) {
         initialized(formList);
@@ -54,16 +56,21 @@ public class GUIFinancialManager {
         btnApprove = new JButton("Approve");
         btnApprove.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnApprove);
+        btnApprove.setBackground(Color.green);
         btnApprove.hide();
 
         btnReject = new JButton("Reject");
         btnReject.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnReject);
+        btnReject.setBackground(Color.red);
         btnReject.hide();
+
 
         btnComment = new JButton("Comment");
         btnComment.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnComment);
+        btnComment.setForeground(Color.white);
+        btnComment.setBackground(Color.blue);
         btnComment.hide();
 
         btnView.addActionListener(actionEvent -> {
@@ -115,7 +122,15 @@ public class GUIFinancialManager {
 
         btnComment.addActionListener(actionEvent -> {
             EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
-            selected.comment();
+            commentGUI = selected.comment();
+            commentGUI.setVisible(true);
+
+            commentGUI.submitButton.addActionListener(aEvent -> {   // listen on submit button in commentGUI
+                formList.remove(selected);
+                requestList.clearSelection();
+                model.removeElement(selected);
+                updateGUI();
+            });
         });
 
         requestList.addListSelectionListener(selectionEvent -> {

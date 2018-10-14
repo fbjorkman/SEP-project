@@ -99,7 +99,7 @@ public class EventRequestForm extends sep.project.Form {
         new GUICommentEventRequest(this, false).setVisible(true);
     }
 
-    public void comment() {
-        new GUICommentEventRequest(this, true).setVisible(true);
+    public GUICommentEventRequest comment() {
+        return new GUICommentEventRequest(this, true);
     }
 }
