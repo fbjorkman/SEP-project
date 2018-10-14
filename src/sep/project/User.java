@@ -60,6 +60,8 @@ public class User implements Runnable {
                 case "FinancialManager":
                     financialManager.updateGUI();
                     break;
+                case "AdminManager":
+                    adminManager.updateGUI();;
             }
             Thread.sleep(1000);
         }

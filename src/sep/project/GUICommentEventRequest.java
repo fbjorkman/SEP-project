@@ -1,5 +1,6 @@
 package sep.project;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,18 +15,48 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
     /**
      * Creates new form GUICommentEventRequest
      */
-    public GUICommentEventRequest(EventRequestForm e) {
+    public GUICommentEventRequest(EventRequestForm e, boolean showComments) {
         this.e = e;
         initComponents();
+        createUserView(showComments);
+        
+    }
+    
+    public void createUserView(boolean showComments) {
         recordNumber.setText(Integer.toString(e.recNum));
         clientName.setText(e.clientName);
         eventType.setText(e.eventType);
         startDate.setText(e.startDate);
         endDate.setText(e.endDate);
         amount.setText(Double.toString(e.expBudget));
+        comment.setVisible(showComments);
+        commentScroll.setVisible(showComments);
+        commentLabel.setVisible(showComments);
+        if (showComments) {
+            if (e.receiver.equals("AdminManager")) {
+                comment.setText(e.comment);
+                comment.setEditable(false);
+            }
+            if (!e.receiver.equals("FinancialManager")) {
+                submitButton.hide();
+            }
+        } else {
+            submitButton.hide();
+        }
+        if  (e.isApproved()){
+            decision.setText("Approved");
+            decision.setForeground(Color.green);
+        }
+        else if (e.isRejected()){
+            decision.setText("Rejected");
+            decision.setForeground(Color.red);
+        }
+        else {
+            decision.setVisible(false);
+        }
         viewPreferences(e);
     }
-
+    
     public void viewPreferences(EventRequestForm e) {
         String s = "";
         if (e.decor) {
@@ -43,8 +74,9 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
         if (e.drinks) {
             s = s.concat(" Soft/Hot drinks ,");
         }
-        if (!s.isEmpty())
-            s = s.substring(1, s.length()-1);
+        if (!s.isEmpty()) {
+            s = s.substring(1, s.length() - 1);
+        }
         preferences.setText(s);
     }
 
@@ -72,12 +104,13 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
         endDate = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         commentLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        commentScroll = new javax.swing.JScrollPane();
         comment = new javax.swing.JTextArea();
         submitButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         amount = new javax.swing.JLabel();
         preferences = new javax.swing.JLabel();
+        decision = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -111,11 +144,11 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
 
         jLabel8.setText("Preferences:");
 
-        commentLabel.setText("Comment:");
+        commentLabel.setText("Comment from Financial Manager:");
 
         comment.setColumns(20);
         comment.setRows(5);
-        jScrollPane1.setViewportView(comment);
+        commentScroll.setViewportView(comment);
 
         submitButton.setBackground(new java.awt.Color(51, 255, 51));
         submitButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -134,6 +167,10 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
 
         preferences.setText("preferences");
 
+        decision.setFont(new java.awt.Font("Lucida Console", 1, 36)); // NOI18N
+        decision.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        decision.setText("decision");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,19 +180,7 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(commentLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(109, 109, 109)
-                                .addComponent(submitButton))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(startDate)
-                                .addGap(56, 56, 56)
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(endDate))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -171,11 +196,26 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
                                     .addComponent(eventType)
                                     .addComponent(eventName)
                                     .addComponent(clientName)
-                                    .addComponent(recordNumber)))))
+                                    .addComponent(recordNumber)))
+                            .addComponent(commentScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(startDate)
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(endDate))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(182, 182, 182)
+                                .addComponent(jLabel1))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(jLabel1)))
-                .addContainerGap(216, Short.MAX_VALUE))
+                        .addGap(221, 221, 221)
+                        .addComponent(submitButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(decision)))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,10 +255,12 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(commentLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(commentScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(submitButton)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(decision)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -237,16 +279,19 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(null, "Data Submitted");
+            JOptionPane.showMessageDialog(null, "Comment Submitted");
+            this.dispose();
         }
     }//GEN-LAST:event_submitButtonActionPerformed
-
+    
     private EventRequestForm e;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel amount;
     private javax.swing.JLabel clientName;
     private javax.swing.JTextArea comment;
     private javax.swing.JLabel commentLabel;
+    private javax.swing.JScrollPane commentScroll;
+    private javax.swing.JLabel decision;
     private javax.swing.JLabel endDate;
     private javax.swing.JLabel eventName;
     private javax.swing.JLabel eventType;
@@ -259,7 +304,6 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel preferences;
     private javax.swing.JLabel recordNumber;
     private javax.swing.JLabel startDate;

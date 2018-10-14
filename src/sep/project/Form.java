@@ -26,7 +26,7 @@ public class Form implements Serializable {
         switch (type){
             case "EventRequestForm":
                 EventRequestForm e = (EventRequestForm) this;
-                e.viewForm();
+                e.view();
                 break;
             case "FinancialRequestForm":
                 FinancialRequestForm f = (FinancialRequestForm) this;

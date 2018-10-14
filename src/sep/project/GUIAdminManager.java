@@ -7,17 +7,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GUIAdminManager {
+
     public JFrame frame;
+    private JButton btnCreate;
     private JButton btnView;
     private JButton btnApprove;
     private JButton btnReject;
     private LinkedList<Form> formList;
     private JList<Form> requestList;
+    private final ServerConnector sc = new ServerConnector();
     DefaultListModel<Form> model;
 
-    public GUIAdminManager(LinkedList<Form> formList){ initialized(formList);}
+    public GUIAdminManager(LinkedList<Form> formList) {
+        initialized(formList);
+    }
 
-    private void initialized(LinkedList<Form> formList){
+    private void initialized(LinkedList<Form> formList) {
         this.formList = formList;
         frame = new JFrame();
         frame.setBounds(50, 50, 550, 500);
@@ -28,6 +33,10 @@ public class GUIAdminManager {
         title.setBounds(10, 10, 200, 20);
         frame.getContentPane().add(title);
 
+        btnCreate = new JButton("Create event");
+        btnCreate.setBounds(30, 40, 200, 20);
+        frame.getContentPane().add(btnCreate);
+
         JLabel listLabel = new JLabel("Request list:");
         listLabel.setBounds(100, 80, 200, 20);
         frame.getContentPane().add(listLabel);
@@ -35,7 +44,7 @@ public class GUIAdminManager {
         model = new DefaultListModel<>();
         requestList = new JList<>(model);
         requestList.setBounds(100, 100, 300, 300);
-        if(formList != null) {
+        if (formList != null) {
             for (Form form : formList) {
                 model.addElement(form);
             }
@@ -57,24 +66,26 @@ public class GUIAdminManager {
         btnReject.hide();
 
         btnView.addActionListener(actionEvent -> {
-            if(requestList.isSelectionEmpty()){
+            if (requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Select a request");
-            }
-            else{
+            } else {
                 Form selected = requestList.getSelectedValue();
                 selected.view();
             }
         });
 
         btnApprove.addActionListener(actionEvent -> {
-            EventRequestForm selected = (EventRequestForm)requestList.getSelectedValue();
-            selected.sender = "GUIAdminManager";
-            selected.receiver = "SeniorCS";
-            selected.approve();
+            EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
+            try {
+                sendDecision(selected, true);
+            } catch (IOException ex) {
+                Logger.getLogger(GUIAdminManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
             formList.remove(selected);
             updateGUI();
-            if(!requestList.isSelectionEmpty())
+            if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Approved request: " + selected);
+            }
             ServerConnector s = new ServerConnector();
             try {
                 s.sendForm(selected);
@@ -85,16 +96,22 @@ public class GUIAdminManager {
         });
 
         btnReject.addActionListener(actionEvent -> {
-            Form selected = requestList.getSelectedValue();
+            EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
+            try {
+                sendDecision(selected, false);
+            } catch (IOException ex) {
+                Logger.getLogger(GUIAdminManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
             formList.remove(selected);
             updateGUI();
-            if(!requestList.isSelectionEmpty())
+            if (!requestList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
+            }
         });
 
         requestList.addListSelectionListener(selectionEvent -> {
             Form selected = requestList.getSelectedValue();
-            if(selected.type.equals("EventRequestForm")) {
+            if (selected.type.equals("EventRequestForm")) {
                 EventRequestForm eventRequestForm = (EventRequestForm) selected;
                 if (eventRequestForm.isRejected()) {
                     if (btnApprove.isShowing()) {
@@ -108,12 +125,27 @@ public class GUIAdminManager {
             }
         });
     }
+    
+    private void sendDecision(EventRequestForm e, boolean approved) throws IOException{
+        e.sender = "AdminManager";
+        e.receiver = "SeniorCS";
+        if (approved){
+          e.approve();
+        }
+        else{
+          e.reject();  
+        }
+        sc.sendForm(e);
+        
+    }
 
-    public void updateGUI(){
-        model.clear();
-        if(formList != null) {
+    public void updateGUI() {
+        //model.clear();
+        if (formList != null) {
             for (Form form : formList) {
-                model.addElement(form);
+                if (!model.contains(form)) {
+                    model.addElement(form);
+                }
             }
         }
         frame.getContentPane().add(requestList);
