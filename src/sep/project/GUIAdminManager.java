@@ -1,15 +1,13 @@
 package sep.project;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class GUISeniorCS {
+public class GUIAdminManager {
     public JFrame frame;
-    private JButton btnCreate;
     private JButton btnView;
     private JButton btnApprove;
     private JButton btnReject;
@@ -17,7 +15,7 @@ public class GUISeniorCS {
     private JList<Form> requestList;
     DefaultListModel<Form> model;
 
-    public GUISeniorCS(LinkedList<Form> formList){ initialized(formList);}
+    public GUIAdminManager(LinkedList<Form> formList){ initialized(formList);}
 
     private void initialized(LinkedList<Form> formList){
         this.formList = formList;
@@ -26,13 +24,9 @@ public class GUISeniorCS {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel title = new JLabel("Logged in as SeniorCS");
+        JLabel title = new JLabel("Logged in as AdminManager");
         title.setBounds(10, 10, 200, 20);
         frame.getContentPane().add(title);
-
-        btnCreate = new JButton("Create event request");
-        btnCreate.setBounds(30, 40, 200, 20);
-        frame.getContentPane().add(btnCreate);
 
         JLabel listLabel = new JLabel("Request list:");
         listLabel.setBounds(100, 80, 200, 20);
@@ -62,11 +56,6 @@ public class GUISeniorCS {
         frame.getContentPane().add(btnReject);
         btnReject.hide();
 
-        btnCreate.addActionListener(actionEvent -> {
-            GUIEventRequestForm eventRequest = new GUIEventRequestForm();
-            eventRequest.frame.setVisible(true);
-        });
-
         btnView.addActionListener(actionEvent -> {
             if(requestList.isSelectionEmpty()){
                 JOptionPane.showMessageDialog(null, "Select a request");
@@ -78,13 +67,21 @@ public class GUISeniorCS {
         });
 
         btnApprove.addActionListener(actionEvent -> {
-            Form selected = requestList.getSelectedValue();
-            selected.sender = "GUISeniorCS";
-            selected.receiver = "FinancialManager";
+            EventRequestForm selected = (EventRequestForm)requestList.getSelectedValue();
+            selected.sender = "GUIAdminManager";
+            selected.receiver = "SeniorCS";
+            selected.approve();
             formList.remove(selected);
             updateGUI();
             if(!requestList.isSelectionEmpty())
                 JOptionPane.showMessageDialog(null, "Approved request: " + selected);
+            ServerConnector s = new ServerConnector();
+            try {
+                s.sendForm(selected);
+            } catch (IOException ex) {
+                Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            frame.dispose();
         });
 
         btnReject.addActionListener(actionEvent -> {
@@ -99,7 +96,7 @@ public class GUISeniorCS {
             Form selected = requestList.getSelectedValue();
             if(selected.type.equals("EventRequestForm")) {
                 EventRequestForm eventRequestForm = (EventRequestForm) selected;
-                if (eventRequestForm.isRejected() || eventRequestForm.isApproved()) {
+                if (eventRequestForm.isRejected()) {
                     if (btnApprove.isShowing()) {
                         btnApprove.hide();
                         btnReject.hide();
@@ -121,5 +118,4 @@ public class GUISeniorCS {
         }
         frame.getContentPane().add(requestList);
     }
-
 }

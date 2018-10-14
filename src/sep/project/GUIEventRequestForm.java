@@ -170,7 +170,7 @@ public class GUIEventRequestForm {
                         Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventNameField.getText(), eventTypeField.getText(),
                         startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
                         decorCB.isEnabled(), partiesCB.isEnabled(), photoCB.isEnabled(), foodCB.isEnabled(), drinksCB.isEnabled(),
-                        Integer.parseInt(expBudgetField.getText()));
+                        Integer.parseInt(expBudgetField.getText()), "");
                 ServerConnector s = new ServerConnector();
                 try {
                     s.sendForm(f);

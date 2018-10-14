@@ -16,40 +16,32 @@ public class Main implements Runnable {
 
     @Override
     public void run() {
-        try{
-            EventQueue.invokeLater(() -> {
-                try {
-//                    ServerConnector s = new ServerConnector();
-//                    GUIEventRequestForm window1 = new GUIEventRequestForm();
-//                    window1.frame.setVisible(true);
-                    /*EventRequestForm test1 = new EventRequestForm(1, "name1", "Birthday party","type1", "10/11", "11/10", 100, true, true, false, true, true, 10000);
-                    EventRequestForm test2 = new EventRequestForm(2, "name2", "Bowling","type2", "11/12", "12/10", 200, true, true, false, false, false, 10000);
-                    EventRequestForm test3 = new EventRequestForm(3, "name3", "Wedding","type3", "12/13", "13/10", 300, true, true, true, true, true, 10000);
-                    test1.reject();
-                    s.sendForm(test1);
-                    s.sendForm(test2);
-                    s.sendForm(test3);
-                    GUISeniorCS window2 = new GUISeniorCS();
-                    window2.frame.setVisible(true);*/
-                    /*Thread seniorCS = new Thread(new User("SeniorCS"));
-                    seniorCS.start();
-                    User SeniorCS = new User("SeniorCS");*/
-
-                    GUIEventRequestForm a = new GUIEventRequestForm();
-                    a.frame.setVisible(true);
-                    ServerConnector sc = new ServerConnector();
-                    LinkedList<Form> l = new LinkedList<>();
-                    while (l.isEmpty()) {   // wait for reply, only used for testing purpose
-                        l = sc.getUpdate("SeniorCS");
-                    }
-                    Form f = l.getFirst();
-                    f.view();
+        try {
+//            ServerConnector s = new ServerConnector();
+//            GUIEventRequestForm window1 = new GUIEventRequestForm();
+//            window1.frame.setVisible(true);
+//            LinkedList<EventRequestForm> test = new LinkedList<>();
+//            EventRequestForm test1 = new EventRequestForm(1, "name1", "Birthday party","type1", "10/11", "11/10", 100, true, true, false, true, true, 10000, "Hejsan");
+//            EventRequestForm test2 = new EventRequestForm(2, "name2", "Bowling","type2", "11/12", "12/10", 200, true, true, false, false, false, 10000);
+//            EventRequestForm test3 = new EventRequestForm(3, "name3", "Wedding","type3", "12/13", "13/10", 300, true, true, true, true, true, 10000);
+//            test1.reject();
+//            test1.receiver = "AdminManager";
+//            test.add(test1);
+//            s.sendForm(test1);
+//            s.sendForm(test2);
+//            s.sendForm(test3);
+//            GUISeniorCS window2 = new GUISeniorCS(null);
+//            window2.frame.setVisible(true);
+//            Thread seniorCS = new Thread(new User("SeniorCS"));
+//            seniorCS.start();
+//            User SeniorCS = new User("SeniorCS");
+//            GUIFinancialManager finMan = new GUIFinancialManager(test);
+//            finMan.frame.setVisible(true);
+//            GUIAdminManager admin = new GUIAdminManager(test);
+//            admin.frame.setVisible(true);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            });
-        }
-        catch(Exception e){}
     }
 }
