@@ -1,25 +1,36 @@
 package sep.project;
 
-import java.awt.Color;
+/**
+ *
+ * @author harald
+ */
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GUIAdminManager {
+public class GUISubteamManager {
 
     public JFrame frame;
     private JButton btnCreate;
     private JButton btnView;
-    private JButton btnApprove;
-    private JButton btnReject;
+    //private JButton btnApprove;
+    // private JButton btnReject;
+    private JButton btnConfirm;
+    private JButton btnDelete;
     private LinkedList<Form> formList;
     private JList<Form> requestList;
     private final ServerConnector sc = new ServerConnector();
+    private final String user;
     DefaultListModel<Form> model;
 
-    public GUIAdminManager(LinkedList<Form> formList) {
+    public GUISubteamManager(LinkedList<Form> formList, String user) {
+        this.user = user;
         initialized(formList);
     }
 
@@ -30,11 +41,11 @@ public class GUIAdminManager {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel title = new JLabel("Logged in as AdminManager");
+        JLabel title = new JLabel("Logged in as " + user);
         title.setBounds(10, 10, 200, 20);
         frame.getContentPane().add(title);
 
-        btnCreate = new JButton("Create event");
+        btnCreate = new JButton("Create new task");
         btnCreate.setBounds(30, 40, 200, 20);
         frame.getContentPane().add(btnCreate);
 
@@ -56,17 +67,21 @@ public class GUIAdminManager {
         btnView.setBounds(100, 420, 100, 20);
         frame.getContentPane().add(btnView);
 
-        btnApprove = new JButton("Approve");
-        btnApprove.setBounds(210, 420, 100, 20);
-        frame.getContentPane().add(btnApprove);
-        btnApprove.setBackground(Color.green);
-        btnApprove.hide();
+        btnConfirm = new JButton("Confirm ready");
+        btnConfirm.setBounds(210, 420, 100, 20);
+        frame.getContentPane().add(btnConfirm);
+        btnConfirm.setBackground(Color.green);
+        btnConfirm.hide();
 
-        btnReject = new JButton("Reject");
-        btnReject.setBounds(320, 420, 100, 20);
-        frame.getContentPane().add(btnReject);
-        btnReject.setBackground(Color.red);
-        btnReject.hide();
+        btnDelete = new JButton("Delete");
+        btnDelete.setBounds(320, 420, 100, 20);
+        frame.getContentPane().add(btnDelete);
+        btnDelete.setBackground(Color.red);
+        btnDelete.hide();
+        btnCreate.addActionListener(actionEvent -> {
+            GUITaskForm task = new GUITaskForm();
+            task.setVisible(true);
+        });
 
         btnView.addActionListener(actionEvent -> {
             if (requestList.isSelectionEmpty()) {
@@ -77,36 +92,32 @@ public class GUIAdminManager {
             }
         });
 
-        btnApprove.addActionListener(actionEvent -> {
-            EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
-            try {
-                sendDecision(selected, true);
-            } catch (IOException ex) {
-                Logger.getLogger(GUIAdminManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            formList.remove(selected);
-            requestList.clearSelection();
-            model.removeElement(selected);
-            updateGUI();
-            if (!requestList.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(null, "Approved request: " + selected);
+        btnConfirm.addActionListener(actionEvent -> {
+            if (requestList.isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null, "Select a request");
+            } else {
+                EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
+                selected.sender = user;
+                selected.receiver = "AdminManager";
+                try {
+                    sc.sendForm(selected);
+                } catch (IOException ex) {
+                    Logger.getLogger(GUISubteamManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                formList.remove(selected);
+                requestList.clearSelection();
+                model.removeElement(selected);
+                updateGUI();
             }
         });
 
-        btnReject.addActionListener(actionEvent -> {
-            EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
-            try {
-                sendDecision(selected, false);
-            } catch (IOException ex) {
-                Logger.getLogger(GUIAdminManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        btnDelete.addActionListener(actionEvent -> {
+            Form selected = requestList.getSelectedValue();
+            JOptionPane.showMessageDialog(null, "Deleting: " + selected);
             formList.remove(selected);
             requestList.clearSelection();
             model.removeElement(selected);
             updateGUI();
-            if (!requestList.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
-            }
         });
 
         requestList.addListSelectionListener(selectionEvent -> {
@@ -114,40 +125,20 @@ public class GUIAdminManager {
                 Form selected = requestList.getSelectedValue();
                 if (selected.type.equals("EventRequestForm")) {
                     EventRequestForm eventRequestForm = (EventRequestForm) selected;
-                    if (eventRequestForm.isRejected()) {
-                        if (btnApprove.isShowing()) {
-                            btnApprove.hide();
-                            btnReject.hide();
-                        }
-                    } else {
-                        btnApprove.show();
-                        btnReject.show();
+                    if (eventRequestForm.isRejected() || eventRequestForm.isApproved()) {
+                        btnConfirm.show();
+                        btnDelete.show();
+
+                    } else {    // taskform with comment
+                        btnConfirm.hide();
+                        btnDelete.show();
                     }
                 }
             } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown
-                requestList.clearSelection();// just unselect then
+                requestList.clearSelection();   // unselect
             }
 
         });
-    }
-
-    private void sendDecision(EventRequestForm e, boolean approved) throws IOException {
-        e.sender = "AdminManager";
-        e.receiver = "SeniorCS";
-        if (approved) {
-            e.approve();
-        } else {
-            e.reject();
-        }
-        sc.sendForm(e);
-        if (e.food || e.drinks) {
-            e.receiver = "ServiceManager";
-            sc.sendForm(e);
-        }
-        if (e.decor || e.parties || e.photo) {
-            e.receiver = "ProductionManager";
-            sc.sendForm(e);
-        }
     }
 
     public void updateGUI() {
@@ -161,4 +152,5 @@ public class GUIAdminManager {
         }
         frame.getContentPane().add(requestList);
     }
+
 }

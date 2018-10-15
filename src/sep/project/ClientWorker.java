@@ -30,6 +30,8 @@ public class ClientWorker extends Server implements Runnable {
             Form f = (Form) inputStream.readObject();
             if (f.type.equals("Update")) {  // client sent in request for update
                 sendPending(f); // send pending forms to the client
+                inputStream.close();
+                client.close();
                 return;
             } else if (f.type.equals("EventRequestForm")) {
                 EventRequestForm e = (EventRequestForm) f;
@@ -37,10 +39,12 @@ public class ClientWorker extends Server implements Runnable {
                     e.id = getId();
                 } else if (e.sender.equals("ProductionManager") || e.sender.equals("ServiceManager")) {
                     handleApproval(e);
+                    inputStream.close();
+                    client.close();
+                    return;
                 }
             }
             addForm(f); // add form to right user queue
-
             inputStream.close();
             client.close();
         } catch (IOException ex) {
@@ -105,11 +109,25 @@ public class ClientWorker extends Server implements Runnable {
     }
 
     private void handleApproval(EventRequestForm e) {    // checks if event has been approved by two sub-team managers
-        if (pendingEvents.get(e.id) == null) {   // first approval
-            pendingEvents.put(e.id, 1);
-        } else {   // if already approved by one of the sub-team managers before
+        int prev;
+        if (pendingEvents.get(e.id) == null) {  // no approvals before
+            prev = 0;
+        } else {
+            prev = pendingEvents.get(e.id);
+        }
+        int current = prev + 1;
+        pendingEvents.put(e.id, current);
+        int expectedApprovals = 0;
+        if (e.food || e.drinks) {
+            expectedApprovals++;
+        }
+        if (e.decor || e.parties || e.photo) {
+            expectedApprovals++;
+        }
+        if (expectedApprovals == current) {
             pendingEvents.remove(e.id);
             addToList(AdminManager, e); // send to AdminManager
         }
+        System.out.println("exp: " + expectedApprovals + " current: " + current);
     }
 }

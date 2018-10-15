@@ -184,6 +184,5 @@ public class GUIEventRequestForm {
         });
 
         btnCancel.addActionListener(e -> frame.dispose());
-
     }
 }
