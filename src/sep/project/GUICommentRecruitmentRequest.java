@@ -70,11 +70,6 @@ public class GUICommentRecruitmentRequest extends javax.swing.JFrame {
         experienceLabel.setText("Years of experience:");
 
         contractType.setEditable(false);
-        contractType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contractTypeActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Recruitment Request");
 
@@ -83,11 +78,6 @@ public class GUICommentRecruitmentRequest extends javax.swing.JFrame {
         contractTypeLabel.setText("Contract type:");
 
         jobTitle.setEditable(false);
-        jobTitle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jobTitleActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Job description:");
 
@@ -116,18 +106,8 @@ public class GUICommentRecruitmentRequest extends javax.swing.JFrame {
         jScrollPane2.setViewportView(comment);
 
         experience.setEditable(false);
-        experience.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                experienceActionPerformed(evt);
-            }
-        });
 
         department.setEditable(false);
-        department.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                departmentActionPerformed(evt);
-            }
-        });
 
         decision.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approved", "Rejected" }));
 
@@ -213,14 +193,6 @@ public class GUICommentRecruitmentRequest extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void contractTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_contractTypeActionPerformed
-
-    private void jobTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobTitleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jobTitleActionPerformed
-
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         boolean approved = false;
         if (decision.getSelectedItem().toString().equals("Approved")) {
@@ -228,7 +200,7 @@ public class GUICommentRecruitmentRequest extends javax.swing.JFrame {
         }
         r.receiver = r.sender;
         r.sender = "SeniorHRManager";
-        r.comment = comment.getText();
+        r.comment = comment.getText().trim();
         r.approved = approved;
         if (r.comment.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Data Missing");
@@ -242,14 +214,6 @@ public class GUICommentRecruitmentRequest extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Data Submitted");
         }
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void experienceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_experienceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_experienceActionPerformed
-
-    private void departmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_departmentActionPerformed
 
     private RecruitmentForm r;
     private final ServerConnector sc = new ServerConnector();

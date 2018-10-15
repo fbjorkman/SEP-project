@@ -2,11 +2,8 @@ package sep.project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,8 +31,8 @@ public class GUISeniorCS {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel title = new JLabel("Logged in as SeniorCS");
-        title.setBounds(10, 10, 200, 20);
+        JLabel title = new JLabel("Logged in as Senior Customer Service Officer");
+        title.setBounds(10, 10, 350, 20);
         frame.getContentPane().add(title);
 
         btnCreate = new JButton("Create event request");
@@ -64,6 +61,7 @@ public class GUISeniorCS {
         btnDelete.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnDelete);
         btnDelete.setBackground(Color.red);
+        btnDelete.setForeground(Color.white);
         btnDelete.hide();
 
         btnApprove = new JButton("Approve");
@@ -76,6 +74,7 @@ public class GUISeniorCS {
         btnReject.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnReject);
         btnReject.setBackground(Color.red);
+        btnReject.setForeground(Color.white);
         btnReject.hide();
 
         btnCreate.addActionListener(actionEvent -> {
@@ -136,14 +135,13 @@ public class GUISeniorCS {
                 if (selected.type.equals("EventRequestForm")) {
                     EventRequestForm eventRequestForm = (EventRequestForm) selected;
                     if (eventRequestForm.isRejected() || eventRequestForm.isApproved()) {
-                        //if (btnApprove.isShowing()) {
                         btnDelete.show();
                         btnApprove.hide();
                         btnReject.hide();
-                        //}
                     } else {
                         btnApprove.show();
                         btnReject.show();
+                        btnDelete.hide();
                     }
                 } else if (selected.type.equals("FinancialRequestForm")) {
                     btnDelete.show();

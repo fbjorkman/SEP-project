@@ -1,10 +1,7 @@
 package sep.project;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,8 +35,8 @@ public class GUISubTeam {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel title = new JLabel("Logged in as " + user);
-        title.setBounds(10, 10, 200, 20);
+        JLabel title = new JLabel("Logged in as " + user + " sub-team");
+        title.setBounds(10, 10, 350, 20);
         frame.getContentPane().add(title);
 
         JLabel listLabel = new JLabel("Task list:");
@@ -66,6 +63,7 @@ public class GUISubTeam {
         btnDelete.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnDelete);
         btnDelete.setBackground(Color.red);
+        btnDelete.setForeground(Color.white);
 
         btnComment.addActionListener(actionEvent -> {
             if (requestList.isSelectionEmpty()) {
@@ -84,28 +82,6 @@ public class GUISubTeam {
             model.removeElement(selected);
             updateGUI();
         });
-/*
-        requestList.addListSelectionListener(selectionEvent -> {
-            try {
-                Form selected = requestList.getSelectedValue();
-                if (selected.type.equals("TaskForm")) {
-                    TaskForm t = (TaskForm) selected;
-                    if (t.isCommented()) {
-                        //if (btnApprove.isShowing()) {
-                        btnDelete.show();
-                        btnComment.hide();
-                        //}
-                    } else {
-                        btnComment.show();
-                        btnDelete.show();
-                    }
-                }
-            } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown
-                requestList.clearSelection();   // unselect
-            }
-        });
-        */
-       
     }
 
     public void updateGUI() {

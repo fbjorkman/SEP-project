@@ -270,7 +270,7 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please make a comment");
         } else {
             ServerConnector s = new ServerConnector();
-            e.comment = comment.getText();
+            e.comment = comment.getText().trim();
             e.sender = "FinancialManager";
             e.receiver = "AdminManager";
             try {

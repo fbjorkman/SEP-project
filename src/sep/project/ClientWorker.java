@@ -28,7 +28,13 @@ public class ClientWorker extends Server implements Runnable {
     public void run() {
         try {
             Form f = (Form) inputStream.readObject();
-            if (f.type.equals("Update")) {  // client sent in request for update
+            if (f.type.equals("CreateEvent")) {
+                EventRequestForm e = (EventRequestForm) f;
+                System.out.println("Server created event #" + e.id + " on the database.");
+                inputStream.close();
+                client.close();
+                return;
+            } else if (f.type.equals("Update")) {  // client sent in request for update
                 sendPending(f); // send pending forms to the client
                 inputStream.close();
                 client.close();

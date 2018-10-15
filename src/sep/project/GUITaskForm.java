@@ -47,12 +47,6 @@ public class GUITaskForm extends javax.swing.JFrame {
 
         projectReferenceLabel.setText("Project reference:");
 
-        projectReference.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                projectReferenceActionPerformed(evt);
-            }
-        });
-
         descriptionLabel.setText("Description:");
 
         description.setColumns(20);
@@ -79,12 +73,6 @@ public class GUITaskForm extends javax.swing.JFrame {
         });
 
         budgetLabel.setText("Budget:");
-
-        budget.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                budgetActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,10 +141,6 @@ public class GUITaskForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void projectReferenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectReferenceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_projectReferenceActionPerformed
-
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         String sender = "ProductionManager";
         String receiver = assignTo.getSelectedItem().toString().replaceAll("\\s+","");  // get rid of whitespaces: Graphic Design -> GraphicDesign
@@ -166,7 +150,7 @@ public class GUITaskForm extends javax.swing.JFrame {
         if (receiver.isEmpty() || description.getText().isEmpty() || prio.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Data Missing");
         } else {
-            TaskForm t = new TaskForm(sender, receiver, projRef, description.getText(), prio, budg);
+            TaskForm t = new TaskForm(sender, receiver, projRef, description.getText().trim(), prio, budg);
             try {
                 s.sendForm(t);
             } catch (IOException ex) {
@@ -176,10 +160,6 @@ public class GUITaskForm extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void budgetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_budgetActionPerformed
 
 
     private final ServerConnector s = new ServerConnector();

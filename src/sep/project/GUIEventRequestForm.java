@@ -2,8 +2,6 @@ package sep.project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -167,8 +165,8 @@ public class GUIEventRequestForm {
                 JOptionPane.showMessageDialog(null, "Data Missing");
             } else {
                 EventRequestForm f = new EventRequestForm(
-                        Integer.parseInt(recNumField.getText()), clientNameField.getText(), eventNameField.getText(), eventTypeField.getText(),
-                        startDateField.getText(), endDateField.getText(), Integer.parseInt(expNumAttendField.getText()),
+                        Integer.parseInt(recNumField.getText()), clientNameField.getText().trim(), eventNameField.getText().trim(), eventTypeField.getText().trim(),
+                        startDateField.getText().trim(), endDateField.getText().trim(), Integer.parseInt(expNumAttendField.getText()),
                         decorCB.isSelected(), partiesCB.isSelected(), photoCB.isSelected(), foodCB.isSelected(), drinksCB.isSelected(),
                         Integer.parseInt(expBudgetField.getText()), "");
                 ServerConnector s = new ServerConnector();

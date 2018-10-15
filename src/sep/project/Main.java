@@ -23,11 +23,11 @@ public class Main implements Runnable {
             Thread financialManager = new Thread(new User("FinancialManager"));
             financialManager.start();
             Thread adminManager = new Thread(new User("AdminManager"));
-            //adminManager.start();
+            adminManager.start();
             Thread prodManager = new Thread(new User("ProductionManager"));
             prodManager.start();
             Thread serviceManager = new Thread(new User("ServiceManager"));
-            //serviceManager.start();
+            serviceManager.start();
             Thread photography = new Thread(new User("Photography"));
             photography.start();
             Thread seniorHR = new Thread(new User("SeniorHRManager"));

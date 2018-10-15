@@ -45,11 +45,6 @@ public class GUIViewRecruitmentRequest extends javax.swing.JFrame {
         contractTypeLabel.setText("Contract type:");
 
         jobTitle.setEditable(false);
-        jobTitle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jobTitleActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Job description:");
 
@@ -63,11 +58,6 @@ public class GUIViewRecruitmentRequest extends javax.swing.JFrame {
         experienceLabel.setText("Years of experience:");
 
         experience.setEditable(false);
-        experience.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                experienceActionPerformed(evt);
-            }
-        });
 
         jobTitleLabel.setText("Job titile:");
 
@@ -141,14 +131,6 @@ public class GUIViewRecruitmentRequest extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jobTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobTitleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jobTitleActionPerformed
-
-    private void experienceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_experienceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_experienceActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel buttonGroupTitle;

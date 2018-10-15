@@ -113,20 +113,9 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
         projectRefLabel.setText("Project Reference:");
 
         projectRef.setEditable(false);
-        projectRef.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                projectRefActionPerformed(evt);
-            }
-        });
 
         amount.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         amount.setText("Required amount:");
-
-        amountField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                amountFieldActionPerformed(evt);
-            }
-        });
 
         reason.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         reason.setText("Reason:");
@@ -224,17 +213,11 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
         sender = "ProductionManager";
     }//GEN-LAST:event_productionButtonActionPerformed
 
-    private void projectRefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectRefActionPerformed
-    }//GEN-LAST:event_projectRefActionPerformed
-
-    private void amountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountFieldActionPerformed
-    }//GEN-LAST:event_amountFieldActionPerformed
-
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         if (sender == null || sender.isEmpty() || projectRef.getText().isEmpty() || amountField.getText().isEmpty() || reasonField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Data Missing");
         } else {
-            FinancialRequestForm f = new FinancialRequestForm(sender, sender, Integer.parseInt(projectRef.getText()), Integer.parseInt(amountField.getText()), reasonField.getText());
+            FinancialRequestForm f = new FinancialRequestForm(sender, sender, Integer.parseInt(projectRef.getText()), Integer.parseInt(amountField.getText()), reasonField.getText().trim());
             ServerConnector s = new ServerConnector();
             try {
                 s.sendForm(f);

@@ -30,15 +30,9 @@ public class GUIAdminManager {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel title = new JLabel("Logged in as AdminManager");
-        title.setBounds(10, 10, 200, 20);
+        JLabel title = new JLabel("Logged in as Administration Manager");
+        title.setBounds(10, 10, 350, 20);
         frame.getContentPane().add(title);
-
-        btnCreate = new JButton("Create event");
-        btnCreate.setBounds(210, 420, 180, 20);
-        btnCreate.setBackground(Color.blue);
-        btnCreate.setForeground(Color.white);
-        frame.getContentPane().add(btnCreate);
 
         JLabel listLabel = new JLabel("Request list:");
         listLabel.setBounds(100, 80, 200, 20);
@@ -58,6 +52,13 @@ public class GUIAdminManager {
         btnView.setBounds(100, 420, 100, 20);
         frame.getContentPane().add(btnView);
 
+        btnCreate = new JButton("Create event");
+        btnCreate.setBounds(210, 420, 180, 20);
+        btnCreate.setBackground(Color.blue);
+        btnCreate.setForeground(Color.white);
+        frame.getContentPane().add(btnCreate);
+        btnCreate.hide();
+
         btnApprove = new JButton("Approve");
         btnApprove.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnApprove);
@@ -68,6 +69,7 @@ public class GUIAdminManager {
         btnReject.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnReject);
         btnReject.setBackground(Color.red);
+        btnReject.setForeground(Color.white);
         btnReject.hide();
 
         btnView.addActionListener(actionEvent -> {
@@ -90,9 +92,23 @@ public class GUIAdminManager {
             requestList.clearSelection();
             model.removeElement(selected);
             updateGUI();
-            if (!requestList.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(null, "Approved request: " + selected);
+        });
+
+        btnCreate.addActionListener(actionEvent -> {    // simulate creating event on server database
+            EventRequestForm selected = (EventRequestForm) requestList.getSelectedValue();
+            selected.sender = "AdminManager";
+            selected.receiver = "Database";
+            selected.type = "CreateEvent";
+            try {
+                sc.sendForm(selected);
+            } catch (IOException ex) {
+                Logger.getLogger(GUIAdminManager.class.getName()).log(Level.SEVERE, null, ex);
             }
+            formList.remove(selected);
+            requestList.clearSelection();
+            model.removeElement(selected);
+            updateGUI();
+            JOptionPane.showMessageDialog(null, "Succesfully created event #" + selected.id);
         });
 
         btnReject.addActionListener(actionEvent -> {
@@ -106,9 +122,6 @@ public class GUIAdminManager {
             requestList.clearSelection();
             model.removeElement(selected);
             updateGUI();
-            if (!requestList.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(null, "Rejected Request: " + selected);
-            }
         });
 
         requestList.addListSelectionListener(selectionEvent -> {
@@ -117,10 +130,10 @@ public class GUIAdminManager {
                 if (selected.type.equals("EventRequestForm")) {
                     EventRequestForm eventRequestForm = (EventRequestForm) selected;
                     if (eventRequestForm.isConfirmed()) {
-                            btnApprove.hide();
-                            btnReject.hide();
-                            btnCreate.show();
-                        
+                        btnApprove.hide();
+                        btnReject.hide();
+                        btnCreate.show();
+
                     } else {
                         btnApprove.show();
                         btnReject.show();
@@ -150,6 +163,11 @@ public class GUIAdminManager {
         if (e.decor || e.parties || e.photo) {
             e.receiver = "ProductionManager";
             sc.sendForm(e);
+        }
+        else if (!(e.food || e.drinks || e.decor || e.parties || e.photo)){
+            e.receiver = "AdminManager";
+            e.confirm();
+            formList.add(e);
         }
     }
 

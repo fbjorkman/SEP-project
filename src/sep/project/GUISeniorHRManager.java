@@ -2,13 +2,7 @@ package sep.project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GUISeniorHRManager {
 
@@ -30,7 +24,7 @@ public class GUISeniorHRManager {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel title = new JLabel("Logged in as SeniorHRManager");
+        JLabel title = new JLabel("Logged in as Senior HR Manager");
         title.setBounds(10, 10, 200, 20);
         frame.getContentPane().add(title);
 

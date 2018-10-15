@@ -59,11 +59,6 @@ public class GUIViewTaskForm extends javax.swing.JFrame {
         projectReferenceLabel.setText("Project reference:");
 
         projectReference.setEditable(false);
-        projectReference.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                projectReferenceActionPerformed(evt);
-            }
-        });
 
         descriptionLabel.setText("Description:");
 
@@ -77,25 +72,10 @@ public class GUIViewTaskForm extends javax.swing.JFrame {
         assignToLabel.setText("Assign to:");
 
         budget.setEditable(false);
-        budget.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                budgetActionPerformed(evt);
-            }
-        });
 
         assignTo.setEditable(false);
-        assignTo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                assignToActionPerformed(evt);
-            }
-        });
 
         priority.setEditable(false);
-        priority.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                priorityActionPerformed(evt);
-            }
-        });
 
         commentLabel.setText("Comment:");
 
@@ -173,22 +153,6 @@ public class GUIViewTaskForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void projectReferenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectReferenceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_projectReferenceActionPerformed
-
-    private void budgetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_budgetActionPerformed
-
-    private void assignToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignToActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_assignToActionPerformed
-
-    private void priorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priorityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_priorityActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField assignTo;

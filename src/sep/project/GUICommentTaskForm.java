@@ -73,18 +73,8 @@ public class GUICommentTaskForm extends javax.swing.JFrame {
         projectReferenceLabel.setText("Project reference:");
 
         budget.setEditable(false);
-        budget.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                budgetActionPerformed(evt);
-            }
-        });
 
         projectReference.setEditable(false);
-        projectReference.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                projectReferenceActionPerformed(evt);
-            }
-        });
 
         descriptionLabel.setText("Description:");
 
@@ -102,18 +92,8 @@ public class GUICommentTaskForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(comment);
 
         assignedTo.setEditable(false);
-        assignedTo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                assignedToActionPerformed(evt);
-            }
-        });
 
         priority.setEditable(false);
-        priority.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                priorityActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,7 +172,7 @@ public class GUICommentTaskForm extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         t.sender = t.assignTo;
         t.receiver = t.manager;
-        t.comment = comment.getText();
+        t.comment = comment.getText().trim();
         if (t.comment != null) {
             try {
                 sc.sendForm(t);
@@ -207,22 +187,6 @@ public class GUICommentTaskForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void budgetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_budgetActionPerformed
-
-    private void projectReferenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectReferenceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_projectReferenceActionPerformed
-
-    private void assignedToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignedToActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_assignedToActionPerformed
-
-    private void priorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priorityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_priorityActionPerformed
 
     private TaskForm t;
     private final ServerConnector sc = new ServerConnector();

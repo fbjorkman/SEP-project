@@ -14,8 +14,34 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
     /**
      * Creates new form GUIRecruitmentForm
      */
-    public GUIRecruitmentForm() {
+    public GUIRecruitmentForm(String user) {
         initComponents();
+        setUserButton(user);
+    }
+    
+        public void setUserButton(String user) {
+        switch (user) {
+            case "ProductionManager": {
+                productionButton.setSelected(true);
+                sender = "ProductionManager";
+                break;
+            }
+            case "ServiceManager": {
+                serviceButton.setSelected(true);
+                sender = "ServiceManager";
+                break;
+            }
+            case "AdminManager": {
+                adminButton.setSelected(true);
+                sender = "AdministrationManager";
+                break;
+            }
+            case "FinancialManager": {
+                financialButton.setSelected(true);
+                sender = "FinancialManager";
+                break;
+            }
+        }
     }
 
     /**
@@ -27,6 +53,8 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        contractButtonGroup = new javax.swing.ButtonGroup();
+        departmentButtonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         contractTypeLabel = new javax.swing.JLabel();
         fullTimeButton = new javax.swing.JRadioButton();
@@ -51,6 +79,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
 
         contractTypeLabel.setText("Contract type:");
 
+        contractButtonGroup.add(fullTimeButton);
         fullTimeButton.setText("Full time");
         fullTimeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,6 +87,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
             }
         });
 
+        contractButtonGroup.add(partTimeButton);
         partTimeButton.setText("Part time");
         partTimeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,6 +97,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
 
         buttonGroupTitle.setText("Requesting department");
 
+        departmentButtonGroup.add(adminButton);
         adminButton.setText("Administration");
         adminButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +105,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
             }
         });
 
+        departmentButtonGroup.add(serviceButton);
         serviceButton.setText("Services");
         serviceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +113,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
             }
         });
 
+        departmentButtonGroup.add(productionButton);
         productionButton.setText("Production");
         productionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +121,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
             }
         });
 
+        departmentButtonGroup.add(financialButton);
         financialButton.setText("Financial");
         financialButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,19 +131,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
 
         experienceLabel.setText("Years of experience:");
 
-        experience.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                experienceActionPerformed(evt);
-            }
-        });
-
         jobTitleLabel.setText("Job title:");
-
-        jobTitle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jobTitleActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Job description:");
 
@@ -211,21 +233,13 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void experienceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_experienceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_experienceActionPerformed
-
-    private void jobTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobTitleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jobTitleActionPerformed
-
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         String sender = this.sender;
         String receiver = "SeniorHRManager";        
         if (sender.isEmpty() || description.getText().isEmpty() || jobTitle.getText().isEmpty() || experience.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Data Missing");
         } else {
-            RecruitmentForm r = new RecruitmentForm(sender, department, experience.getText(), jobTitle.getText(), description.getText(), contractType);
+            RecruitmentForm r = new RecruitmentForm(sender, department, experience.getText().trim(), jobTitle.getText().trim(), description.getText().trim(), contractType);
             try {
                 s.sendForm(r);
             } catch (IOException ex) {
@@ -271,7 +285,9 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton adminButton;
     private javax.swing.JLabel buttonGroupTitle;
+    private javax.swing.ButtonGroup contractButtonGroup;
     private javax.swing.JLabel contractTypeLabel;
+    private javax.swing.ButtonGroup departmentButtonGroup;
     private javax.swing.JTextArea description;
     private javax.swing.JTextField experience;
     private javax.swing.JLabel experienceLabel;

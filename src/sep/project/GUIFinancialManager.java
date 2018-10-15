@@ -31,7 +31,7 @@ public class GUIFinancialManager {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel title = new JLabel("Logged in as Financial manager");
+        JLabel title = new JLabel("Logged in as Financial Manager");
         title.setBounds(10, 10, 250, 20);
         frame.getContentPane().add(title);
 
@@ -63,6 +63,7 @@ public class GUIFinancialManager {
         btnReject.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnReject);
         btnReject.setBackground(Color.red);
+        btnReject.setForeground(Color.white);
         btnReject.hide();
 
         btnComment = new JButton("Comment");
@@ -145,10 +146,12 @@ public class GUIFinancialManager {
                     btnApprove.show();
                     btnReject.show();
                     btnComment.hide();
+                    btnView.show();
 
                 } else {    // EventRequestForm
                     btnApprove.hide();
                     btnReject.hide();
+                    btnView.hide();
                     btnComment.show();
                 }
             } catch (NullPointerException e) {  // when selected has been submitted and removed, nullpointer exception will be thrown

@@ -18,7 +18,7 @@ public class Form implements Serializable {
     }
     
     public String toString(){
-        return "Type: " + type + ", Sender: " + sender + ", Receiver: " + receiver;
+        return type + " from " + sender;
     }
     
     public void view(){  // receiver is the one viewing the form

@@ -6,8 +6,6 @@ package sep.project;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -42,7 +40,7 @@ public class GUISubteamManager {
         frame.getContentPane().setLayout(null);
 
         JLabel title = new JLabel("Logged in as " + user);
-        title.setBounds(10, 10, 200, 20);
+        title.setBounds(10, 10, 350, 20);
         frame.getContentPane().add(title);
 
         btnCreate = new JButton("Create new task");
@@ -97,7 +95,7 @@ public class GUISubteamManager {
         });
 
         btnStaffRequest.addActionListener(actionEvent -> {
-            new GUIRecruitmentForm().setVisible(true);
+            new GUIRecruitmentForm(user).setVisible(true);
         });
 
         btnView.addActionListener(actionEvent -> {
@@ -154,9 +152,11 @@ public class GUISubteamManager {
                     if (eventRequestForm.isRejected() || eventRequestForm.isApproved()) {
                         btnConfirm.show();
                         btnDelete.show();
+                        btnBudgetRequest.hide();
 
                     } else {    // taskform with comment
                         btnConfirm.hide();
+                        btnBudgetRequest.hide();
                         btnDelete.show();
                     }
                 } else if (selected.type.equals("TaskForm")) {
@@ -164,6 +164,12 @@ public class GUISubteamManager {
                     btnBudgetRequest.show();
                     btnDelete.setBounds(350, 420, 100, 20);
                     btnDelete.show();
+                }
+                else if (selected.type.equals("RecruitmentForm")){
+                    btnDelete.setBounds(210, 420, 100, 20);
+                    btnDelete.show();
+                    btnBudgetRequest.hide();
+                    btnConfirm.hide();
                 }
             } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown
                 requestList.clearSelection();   // unselect
