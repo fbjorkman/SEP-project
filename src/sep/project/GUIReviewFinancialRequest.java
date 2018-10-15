@@ -145,7 +145,7 @@ public class GUIReviewFinancialRequest extends javax.swing.JFrame {
 
     private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveButtonActionPerformed
         JOptionPane.showMessageDialog(null, "Approve Financial Request: Press OK to confirm.");
-        form.approved = true;
+        form.approved = 1;
         try {
             submitDecision();
         } catch (IOException ex) {
@@ -155,7 +155,7 @@ public class GUIReviewFinancialRequest extends javax.swing.JFrame {
 
     private void rejectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectButtonActionPerformed
         JOptionPane.showMessageDialog(null, "Reject Financial Request. Press OK to confirm.");
-        form.approved = false;
+        form.approved = -1;
         try {
             submitDecision();
         } catch (IOException ex) {
@@ -167,7 +167,7 @@ public class GUIReviewFinancialRequest extends javax.swing.JFrame {
         form.receiver = form.sender;    // reply back to the requestor
         form.sender = "FinancialManager";
         sc.sendForm(form);
-        if (!form.approved) {
+        if (form.approved == -1) {
             form.receiver = "SeniorCS"; // send a copy to the SeniorCS
             sc.sendForm(form);
         }
