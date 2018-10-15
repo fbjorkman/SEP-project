@@ -159,7 +159,7 @@ public class GUITaskForm extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         String sender = "ProductionManager";
-        String receiver = assignTo.getSelectedItem().toString();
+        String receiver = assignTo.getSelectedItem().toString().replaceAll("\\s+","");  // get rid of whitespaces: Graphic Design -> GraphicDesign
         String prio = priority.getSelectedItem().toString();
         int projRef = Integer.parseInt(projectReference.getText());
         double budg = Double.parseDouble(this.budget.getText());
@@ -172,7 +172,8 @@ public class GUITaskForm extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(null, "Data Submitted");
+            JOptionPane.showMessageDialog(null, "Task Submitted");
+            this.dispose();
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
@@ -182,6 +183,7 @@ public class GUITaskForm extends javax.swing.JFrame {
 
 
     private final ServerConnector s = new ServerConnector();
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> assignTo;
     private javax.swing.JLabel assignToLabel;

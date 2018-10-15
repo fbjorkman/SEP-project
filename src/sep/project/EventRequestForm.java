@@ -23,6 +23,7 @@ public class EventRequestForm extends sep.project.Form {
     public boolean food;
     public boolean drinks;
     public double expBudget;
+    private boolean confirmed;
     private int approved;
     public String comment;
 
@@ -89,6 +90,14 @@ public class EventRequestForm extends sep.project.Form {
 
     public boolean isApproved() {
         return approved > 0;
+    }
+    
+    public void confirm(){
+        confirmed = true;
+    }
+    
+    public boolean isConfirmed(){
+        return confirmed;
     }
 
     public void view() {

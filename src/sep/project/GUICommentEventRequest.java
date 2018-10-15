@@ -19,9 +19,9 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
         this.e = e;
         initComponents();
         createUserView(showComments);
-        
+
     }
-    
+
     public void createUserView(boolean showComments) {
         recordNumber.setText(Integer.toString(e.recNum));
         clientName.setText(e.clientName);
@@ -44,20 +44,18 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
         } else {
             submitButton.hide();
         }
-        if  (e.isApproved()){
+        if (e.isApproved()) {
             decision.setText("Approved");
             decision.setForeground(Color.green);
-        }
-        else if (e.isRejected()){
+        } else if (e.isRejected()) {
             decision.setText("Rejected");
             decision.setForeground(Color.red);
-        }
-        else {
+        } else {
             decision.setVisible(false);
         }
         viewPreferences(e);
     }
-    
+
     public void viewPreferences(EventRequestForm e) {
         String s = "";
         if (e.decor) {
@@ -284,7 +282,7 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_submitButtonActionPerformed
-    
+
     private EventRequestForm e;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel amount;

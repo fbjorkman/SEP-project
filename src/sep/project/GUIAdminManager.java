@@ -35,7 +35,9 @@ public class GUIAdminManager {
         frame.getContentPane().add(title);
 
         btnCreate = new JButton("Create event");
-        btnCreate.setBounds(30, 40, 200, 20);
+        btnCreate.setBounds(210, 420, 180, 20);
+        btnCreate.setBackground(Color.blue);
+        btnCreate.setForeground(Color.white);
         frame.getContentPane().add(btnCreate);
 
         JLabel listLabel = new JLabel("Request list:");
@@ -114,14 +116,15 @@ public class GUIAdminManager {
                 Form selected = requestList.getSelectedValue();
                 if (selected.type.equals("EventRequestForm")) {
                     EventRequestForm eventRequestForm = (EventRequestForm) selected;
-                    if (eventRequestForm.isRejected()) {
-                        if (btnApprove.isShowing()) {
+                    if (eventRequestForm.isConfirmed()) {
                             btnApprove.hide();
                             btnReject.hide();
-                        }
+                            btnCreate.show();
+                        
                     } else {
                         btnApprove.show();
                         btnReject.show();
+                        btnCreate.hide();
                     }
                 }
             } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown

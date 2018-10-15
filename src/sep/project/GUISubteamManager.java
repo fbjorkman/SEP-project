@@ -15,14 +15,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GUISubteamManager {
-
     public JFrame frame;
     private JButton btnCreate;
     private JButton btnView;
-    //private JButton btnApprove;
-    // private JButton btnReject;
+    private GUITaskForm taskForm;
     private JButton btnConfirm;
     private JButton btnDelete;
+    private JButton btnBudgetRequest;
+    private JButton btnStaffRequest;
     private LinkedList<Form> formList;
     private JList<Form> requestList;
     private final ServerConnector sc = new ServerConnector();
@@ -49,6 +49,10 @@ public class GUISubteamManager {
         btnCreate.setBounds(30, 40, 200, 20);
         frame.getContentPane().add(btnCreate);
 
+        btnStaffRequest = new JButton("Create staff request");
+        btnStaffRequest.setBounds(240, 40, 200, 20);
+        frame.getContentPane().add(btnStaffRequest);
+
         JLabel listLabel = new JLabel("Request list:");
         listLabel.setBounds(100, 80, 200, 20);
         frame.getContentPane().add(listLabel);
@@ -67,20 +71,28 @@ public class GUISubteamManager {
         btnView.setBounds(100, 420, 100, 20);
         frame.getContentPane().add(btnView);
 
-        btnConfirm = new JButton("Confirm ready");
+        btnConfirm = new JButton("Confirm");
         btnConfirm.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnConfirm);
         btnConfirm.setBackground(Color.green);
         btnConfirm.hide();
 
+        btnBudgetRequest = new JButton("Request budget");
+        btnBudgetRequest.setBounds(210, 420, 130, 20);
+        frame.getContentPane().add(btnBudgetRequest);
+        btnBudgetRequest.setBackground(Color.blue);
+        btnBudgetRequest.setForeground(Color.white);
+        btnBudgetRequest.hide();
+
         btnDelete = new JButton("Delete");
         btnDelete.setBounds(320, 420, 100, 20);
         frame.getContentPane().add(btnDelete);
         btnDelete.setBackground(Color.red);
+        btnDelete.setForeground(Color.white);
         btnDelete.hide();
         btnCreate.addActionListener(actionEvent -> {
-            GUITaskForm task = new GUITaskForm();
-            task.setVisible(true);
+            taskForm = new GUITaskForm();
+            taskForm.setVisible(true);
         });
 
         btnView.addActionListener(actionEvent -> {
@@ -133,6 +145,11 @@ public class GUISubteamManager {
                         btnConfirm.hide();
                         btnDelete.show();
                     }
+                } else if (selected.type.equals("TaskForm")) {
+                    btnConfirm.hide();
+                    btnBudgetRequest.show();
+                    btnDelete.setBounds(350, 420, 100, 20);
+                    btnDelete.show();
                 }
             } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown
                 requestList.clearSelection();   // unselect

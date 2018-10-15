@@ -17,6 +17,7 @@ public class User implements Runnable {
     GUIFinancialManager financialManager;
     GUIAdminManager adminManager;
     GUISubteamManager productionManager, serviceManager;
+    GUISubTeam photography;
 
     public User(String name) {
         this.name = name;
@@ -49,6 +50,11 @@ public class User implements Runnable {
                 serviceManager = new GUISubteamManager(notificationList, "ServiceManager");
                 serviceManager.frame.setVisible(true);
                 break;
+                
+            case "Photography":
+                photography = new GUISubTeam(notificationList, "Photography");
+                photography.frame.setVisible(true);
+                break;
         }
         Thread updater = new Thread(() -> {
             try {
@@ -79,6 +85,9 @@ public class User implements Runnable {
                     break;
                 case "ServiceManager":
                     serviceManager.updateGUI();
+                    break;
+                case "Photography":
+                    photography.updateGUI();
                     break;
             }
             Thread.sleep(1000);

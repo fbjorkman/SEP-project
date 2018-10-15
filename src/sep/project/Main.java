@@ -19,15 +19,17 @@ public class Main implements Runnable {
     public void run() {
         try {
             Thread seniorCS = new Thread(new User("SeniorCS"));
-            seniorCS.start();
+            //seniorCS.start();
             Thread financialManager = new Thread(new User("FinancialManager"));
-            financialManager.start();
+            //financialManager.start();
             Thread adminManager = new Thread(new User("AdminManager"));
-            adminManager.start();
+            //adminManager.start();
             Thread prodManager = new Thread(new User("ProductionManager"));
             prodManager.start();
             Thread serviceManager = new Thread(new User("ServiceManager"));
-            serviceManager.start();
+            //serviceManager.start();
+            Thread photography = new Thread(new User("Photography"));
+            photography.start();
         } catch (Exception e) {
             e.printStackTrace();
         }

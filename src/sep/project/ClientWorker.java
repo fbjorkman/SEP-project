@@ -76,6 +76,7 @@ public class ClientWorker extends Server implements Runnable {
                 break;
             case "Photography":
                 addToList(Photography, f);
+                break;
         }
     }
 
@@ -102,6 +103,7 @@ public class ClientWorker extends Server implements Runnable {
                 break;
             case "Photography":
                 list = copyAndEmptyList(Photography);
+                break;
         }
         outputStream.writeObject(list);
         outputStream.flush();
@@ -126,8 +128,9 @@ public class ClientWorker extends Server implements Runnable {
         }
         if (expectedApprovals == current) {
             pendingEvents.remove(e.id);
+            e.confirm();
             addToList(AdminManager, e); // send to AdminManager
         }
-        System.out.println("exp: " + expectedApprovals + " current: " + current);
+        //System.out.println("exp: " + expectedApprovals + " current: " + current);
     }
 }

@@ -10,6 +10,7 @@ public class TaskForm extends Form{
     public String assignTo;
     public String description;
     public String priority;
+    public String comment;
     public double budget;
   
     
@@ -26,6 +27,10 @@ public class TaskForm extends Form{
     public void view(){
         GUIViewTaskForm gui = new GUIViewTaskForm(this);
         gui.setVisible(true);
+    }
+    
+    public boolean isCommented(){
+        return !comment.isEmpty();
     }
     
 }

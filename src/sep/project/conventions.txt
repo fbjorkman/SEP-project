@@ -6,6 +6,10 @@ Sender/receiver:
 "ServiceManager"
 "SeniorHRManager"
 "Photography" // får bli vår subteam, jag orkar inte göra alla subteams
+"Music"
+"GraphicDesign"
+"Decorations"
+"NetworkSupport"
 
 type of Form:
 "Update" = just a request to get its pending forms from server
