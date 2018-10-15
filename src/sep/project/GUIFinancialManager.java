@@ -65,7 +65,6 @@ public class GUIFinancialManager {
         btnReject.setBackground(Color.red);
         btnReject.hide();
 
-
         btnComment = new JButton("Comment");
         btnComment.setBounds(210, 420, 100, 20);
         frame.getContentPane().add(btnComment);
@@ -92,13 +91,13 @@ public class GUIFinancialManager {
             } catch (IOException ex) {
                 Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
             }
+            if (!requestList.isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null, "Approved request: " + selected);
+            }
             formList.remove(selected);
             requestList.clearSelection();
             model.removeElement(selected);
             updateGUI();
-            if (!requestList.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(null, "Approved request: " + selected);
-            }
         });
 
         btnReject.addActionListener(actionEvent -> {
@@ -106,6 +105,12 @@ public class GUIFinancialManager {
             selected.receiver = selected.sender;    // reply back to the sender
             selected.sender = "FinancialManager";
             selected.reject();
+            try {
+                sc.sendForm(selected);
+            } catch (IOException ex) {
+                Logger.getLogger(GUISeniorCS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            selected.receiver = "SeniorCS"; // Send copy to seniorCS
             try {
                 sc.sendForm(selected);
             } catch (IOException ex) {

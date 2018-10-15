@@ -133,7 +133,7 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap(49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -171,14 +171,14 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(70, 70, 70)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(21, 21, 21))))
+                        .addGap(16, 16, 16))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(contractTypeLabel)
                     .addComponent(fullTimeButton)
@@ -205,39 +205,11 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(submitButton)
-                .addContainerGap())
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fullTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullTimeButtonActionPerformed
-        contractType = "Full time";
-    }//GEN-LAST:event_fullTimeButtonActionPerformed
-
-    private void partTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partTimeButtonActionPerformed
-        contractType = "Part time";
-    }//GEN-LAST:event_partTimeButtonActionPerformed
-
-    private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
-        sender = "AdministrationManager";
-        department = "Administration";
-    }//GEN-LAST:event_adminButtonActionPerformed
-
-    private void serviceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceButtonActionPerformed
-        sender = "ServiceManager";
-        department = "Services";
-    }//GEN-LAST:event_serviceButtonActionPerformed
-
-    private void productionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productionButtonActionPerformed
-        sender = "ProductionManager";
-        department = "Production";
-    }//GEN-LAST:event_productionButtonActionPerformed
-
-    private void financialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_financialButtonActionPerformed
-        sender = "FinancialManager";
-        department = "Financial";
-    }//GEN-LAST:event_financialButtonActionPerformed
 
     private void experienceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_experienceActionPerformed
         // TODO add your handling code here:
@@ -259,9 +231,38 @@ public class GUIRecruitmentForm extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
             }
+            this.dispose();
             JOptionPane.showMessageDialog(null, "Data Submitted");
         }
     }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void financialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_financialButtonActionPerformed
+        sender = "FinancialManager";
+        department = "Financial";
+    }//GEN-LAST:event_financialButtonActionPerformed
+
+    private void productionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productionButtonActionPerformed
+        sender = "ProductionManager";
+        department = "Production";
+    }//GEN-LAST:event_productionButtonActionPerformed
+
+    private void serviceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceButtonActionPerformed
+        sender = "ServiceManager";
+        department = "Services";
+    }//GEN-LAST:event_serviceButtonActionPerformed
+
+    private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
+        sender = "AdministrationManager";
+        department = "Administration";
+    }//GEN-LAST:event_adminButtonActionPerformed
+
+    private void partTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partTimeButtonActionPerformed
+        contractType = "Part time";
+    }//GEN-LAST:event_partTimeButtonActionPerformed
+
+    private void fullTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullTimeButtonActionPerformed
+        contractType = "Full time";
+    }//GEN-LAST:event_fullTimeButtonActionPerformed
 
     private final ServerConnector s = new ServerConnector();
     private String department;

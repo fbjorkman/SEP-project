@@ -1,5 +1,6 @@
 package sep.project;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +25,15 @@ public class GUIViewFinancialRequest extends javax.swing.JFrame {
     }
     
     private void setStatus(int approved){
-        if (approved > 0) status.setText("Approved");
-        if (approved == 0) status.setText("Pending");
-        else status.setText("Rejected");
+        if (approved > 0){
+            status.setText("Approved");
+            status.setForeground(Color.green);
+        }
+        else if (approved == 0) status.setText("Pending");
+        else {
+            status.setText("Rejected");
+            status.setForeground(Color.red);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

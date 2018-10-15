@@ -15,7 +15,7 @@ public class GUIViewTaskForm extends javax.swing.JFrame {
         budget.setText(Double.toString(form.budget));
         description.setText(form.description);
         projectReference.setText(Integer.toString(form.projectReference));
-        priority.setText(priority.getText());
+        priority.setText(form.priority);
         boolean showComment = false;
         if (form.comment != null) {
             comment.setText(form.comment);

@@ -11,8 +11,35 @@ import javax.swing.JOptionPane;
  */
 public class GUIFinancialRequestForm extends javax.swing.JFrame {
 
-    public GUIFinancialRequestForm() {
+    public GUIFinancialRequestForm(String user, int reference) {
         initComponents();
+        setUserButton(user);
+        projectRef.setText(Integer.toString(reference));
+    }
+
+    public void setUserButton(String user) {
+        switch (user) {
+            case "ProductionManager": {
+                productionButton.setSelected(true);
+                sender = "ProductionManager";
+                break;
+            }
+            case "ServiceManager": {
+                serviceButton.setSelected(true);
+                sender = "ServiceManager";
+                break;
+            }
+            case "AdminManager": {
+                adminButton.setSelected(true);
+                sender = "AdministrationManager";
+                break;
+            }
+            case "FinancialManager": {
+                financialButton.setSelected(true);
+                sender = "FinancialManager";
+                break;
+            }
+        }
     }
 
     /**
@@ -31,8 +58,8 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
         serviceButton = new javax.swing.JRadioButton();
         productionButton = new javax.swing.JRadioButton();
         financialButton = new javax.swing.JRadioButton();
-        projectRef = new javax.swing.JLabel();
-        refField = new javax.swing.JTextField();
+        projectRefLabel = new javax.swing.JLabel();
+        projectRef = new javax.swing.JTextField();
         amount = new javax.swing.JLabel();
         amountField = new javax.swing.JTextField();
         reason = new javax.swing.JLabel();
@@ -82,12 +109,13 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
             }
         });
 
-        projectRef.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        projectRef.setText("Project Reference:");
+        projectRefLabel.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        projectRefLabel.setText("Project Reference:");
 
-        refField.addActionListener(new java.awt.event.ActionListener() {
+        projectRef.setEditable(false);
+        projectRef.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refFieldActionPerformed(evt);
+                projectRefActionPerformed(evt);
             }
         });
 
@@ -136,13 +164,13 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
                     .addComponent(buttonGroupTitle)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(projectRef)
+                            .addComponent(projectRefLabel)
                             .addComponent(amount)
                             .addComponent(reason))
                         .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(refField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(projectRef, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -170,8 +198,8 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
                     .addComponent(financialButton))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(projectRef)
-                    .addComponent(refField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(projectRefLabel)
+                    .addComponent(projectRef, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(amount)
@@ -196,17 +224,17 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
         sender = "ProductionManager";
     }//GEN-LAST:event_productionButtonActionPerformed
 
-    private void refFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refFieldActionPerformed
-    }//GEN-LAST:event_refFieldActionPerformed
+    private void projectRefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectRefActionPerformed
+    }//GEN-LAST:event_projectRefActionPerformed
 
     private void amountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountFieldActionPerformed
     }//GEN-LAST:event_amountFieldActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        if (sender == null || sender.isEmpty() || refField.getText().isEmpty() || amountField.getText().isEmpty() || reasonField.getText().isEmpty()) {
+        if (sender == null || sender.isEmpty() || projectRef.getText().isEmpty() || amountField.getText().isEmpty() || reasonField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Data Missing");
         } else {
-            FinancialRequestForm f = new FinancialRequestForm(sender, sender, Integer.parseInt(refField.getText()), Integer.parseInt(amountField.getText()), reasonField.getText());
+            FinancialRequestForm f = new FinancialRequestForm(sender, sender, Integer.parseInt(projectRef.getText()), Integer.parseInt(amountField.getText()), reasonField.getText());
             ServerConnector s = new ServerConnector();
             try {
                 s.sendForm(f);
@@ -214,6 +242,7 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
                 Logger.getLogger(GUIFinancialRequestForm.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Data Submitted");
+            this.dispose();
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
@@ -239,10 +268,10 @@ public class GUIFinancialRequestForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton financialButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton productionButton;
-    private javax.swing.JLabel projectRef;
+    private javax.swing.JTextField projectRef;
+    private javax.swing.JLabel projectRefLabel;
     private javax.swing.JLabel reason;
     private javax.swing.JTextArea reasonField;
-    private javax.swing.JTextField refField;
     private javax.swing.JRadioButton serviceButton;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel title;

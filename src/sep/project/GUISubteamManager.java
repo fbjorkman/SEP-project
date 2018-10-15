@@ -10,11 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GUISubteamManager {
+
     public JFrame frame;
     private JButton btnCreate;
     private JButton btnView;
@@ -90,9 +90,14 @@ public class GUISubteamManager {
         btnDelete.setBackground(Color.red);
         btnDelete.setForeground(Color.white);
         btnDelete.hide();
+
         btnCreate.addActionListener(actionEvent -> {
             taskForm = new GUITaskForm();
             taskForm.setVisible(true);
+        });
+
+        btnStaffRequest.addActionListener(actionEvent -> {
+            new GUIRecruitmentForm().setVisible(true);
         });
 
         btnView.addActionListener(actionEvent -> {
@@ -101,6 +106,15 @@ public class GUISubteamManager {
             } else {
                 Form selected = requestList.getSelectedValue();
                 selected.view();
+            }
+        });
+
+        btnBudgetRequest.addActionListener(actionEvent -> {
+            if (requestList.isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null, "Select a task");
+            } else {
+                TaskForm selected = (TaskForm) requestList.getSelectedValue();
+                new GUIFinancialRequestForm(user, selected.projectReference).setVisible(true);
             }
         });
 

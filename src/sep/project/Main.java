@@ -19,9 +19,9 @@ public class Main implements Runnable {
     public void run() {
         try {
             Thread seniorCS = new Thread(new User("SeniorCS"));
-            //seniorCS.start();
+            seniorCS.start();
             Thread financialManager = new Thread(new User("FinancialManager"));
-            //financialManager.start();
+            financialManager.start();
             Thread adminManager = new Thread(new User("AdminManager"));
             //adminManager.start();
             Thread prodManager = new Thread(new User("ProductionManager"));
@@ -30,6 +30,8 @@ public class Main implements Runnable {
             //serviceManager.start();
             Thread photography = new Thread(new User("Photography"));
             photography.start();
+            Thread seniorHR = new Thread(new User("SeniorHRManager"));
+            seniorHR.start();
         } catch (Exception e) {
             e.printStackTrace();
         }

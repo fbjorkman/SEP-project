@@ -145,6 +145,10 @@ public class GUISeniorCS {
                         btnApprove.show();
                         btnReject.show();
                     }
+                } else if (selected.type.equals("FinancialRequestForm")) {
+                    btnDelete.show();
+                    btnApprove.hide();
+                    btnReject.hide();
                 }
             } catch (NullPointerException e) {// when selected has been submitted and removed, nullpointer exception will be thrown
                 requestList.clearSelection();   // unselect
