@@ -6,7 +6,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TestCases {
-    public void createEvent(){
+    public static void main(String[] args) throws ClassNotFoundException {
+        createEvent();
+        addFinancialComment();
+    }
+    
+    public static void createEvent() throws ClassNotFoundException{
         Server s = new Server();
         Thread serverThread = new Thread(s);
         serverThread.start();
@@ -27,7 +32,7 @@ public class TestCases {
         System.out.println(received);
     }
 
-    public void addFinancialComment(){
+    public static void addFinancialComment() throws ClassNotFoundException{
         Server s = new Server();
         Thread serverThread = new Thread(s);
         serverThread.start();
