@@ -67,6 +67,8 @@ public class TestCases {
         System.out.println("addFinancialComment test: " + result);
     }
 
+//  Check that job title in recruitment request form submitted by production manager equals job title in
+//  recruitment request form received in senior HR manager notification list
     public static void createRecruitmentRequest() throws IOException, ClassNotFoundException {
         String jobTitle = "Photographer";
         RecruitmentForm r = new RecruitmentForm("ProductionManager", "ProductionManager", "2", jobTitle, "Must know how to take photos", "Part time");
@@ -88,6 +90,8 @@ public class TestCases {
 
     }
 
+//  Check that the event request will appear in AdminManagers notification list only when
+//  BOTH subteamManagers have confirmed the request
     public static void finalizingEventRequest() throws IOException, InterruptedException, ClassNotFoundException {
         ServerConnector sc = new ServerConnector();
         EventRequestForm e = new EventRequestForm(1, "client", "something", "festival", "2018-10-10", "2018-10-12", 100, true, true, true, true, true, 20000, null);
@@ -96,12 +100,14 @@ public class TestCases {
         boolean check1, check2;
         e.sender = "ProductionManager";
         e.receiver = "AdminManager";
+//        Simulate confirming of eventrequest
         sc.sendForm(e);
         TimeUnit.SECONDS.sleep(1);
         l = sc.getUpdate("AdminManager");
         check1 = l.isEmpty();
         System.out.println(l.toString());
         e.sender = "ServiceManager";
+//        Simulate confirming of eventrequest
         sc.sendForm(e);
         TimeUnit.SECONDS.sleep(1);
         l = sc.getUpdate("AdminManager");
