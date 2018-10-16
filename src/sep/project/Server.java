@@ -62,4 +62,8 @@ public class Server implements Runnable{
         list.clear();
         return copy;
     }
+    
+    public void close() throws IOException{
+        server.close();
+    }
 }

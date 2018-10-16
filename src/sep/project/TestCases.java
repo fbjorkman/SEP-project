@@ -6,17 +6,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TestCases {
-    public static void main(String[] args) throws ClassNotFoundException {
-        createEvent();
-        addFinancialComment();
-    }
-    
-    public static void createEvent() throws ClassNotFoundException{
+
+    public static void main(String[] args) throws ClassNotFoundException, IOException {
         Server s = new Server();
         Thread serverThread = new Thread(s);
         serverThread.start();
+        createEventRequest();
+        addFinancialComment();
+    }
 
-        EventRequestForm e = new EventRequestForm(1, "client", "name", "festival", "2018-10-10", "2018-10-12", 100, true, true, true, false, false, 20000, null);
+    // tests if name of sent eventrequestform is equal to the name of received eventrequestform
+    public static void createEventRequest() throws ClassNotFoundException, IOException {
+
+        String test = "name";
+        String result;
+        EventRequestForm e = new EventRequestForm(1, "client", test, "festival", "2018-10-10", "2018-10-12", 100, true, true, true, false, false, 20000, null);
         ServerConnector sc = new ServerConnector();
         try {
             sc.sendForm(e);
@@ -29,18 +33,22 @@ public class TestCases {
         }
         Form f = l.getFirst();
         EventRequestForm received = (EventRequestForm) f;
-        System.out.println(received);
+        if (received.eventName.equals(test)) {
+            result = "passed";
+        } else {
+            result = "failed";
+        }
+        System.out.println("CreateEventRequest test: " + result);
     }
 
-    public static void addFinancialComment() throws ClassNotFoundException{
-        Server s = new Server();
-        Thread serverThread = new Thread(s);
-        serverThread.start();
+    // tests if the comment added and sent via GUI is equal to the comment that is received 
+    public static void addFinancialComment() throws ClassNotFoundException, IOException {
 
         EventRequestForm e = new EventRequestForm(1, "client", "name", "festival", "2018-10-10", "2018-10-12", 100, true, true, true, false, false, 20000, null);
         e.receiver = "FinancialManager";    // enable submit button manually
         GUICommentEventRequest commentGUI = new GUICommentEventRequest(e, true);
         commentGUI.setVisible(true);
+
         ServerConnector sc = new ServerConnector();
         LinkedList<Form> l = new LinkedList<>();
         while (l.isEmpty()) {   // wait for reply, only used for testing purpose
@@ -48,7 +56,12 @@ public class TestCases {
         }
         Form f = l.getFirst();
         EventRequestForm received = (EventRequestForm) f;
-        System.out.println(received);
-        System.out.println(received.comment); // check the comment was delivered
+        String result;
+        if (received.comment.equals(commentGUI.getComment())) {
+            result = "passed";
+        } else {
+            result = "failed";
+        }
+        System.out.println("AddFinancialComment test: " + result);
     }
 }
