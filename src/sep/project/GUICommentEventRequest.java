@@ -21,6 +21,10 @@ public class GUICommentEventRequest extends javax.swing.JFrame {
         createUserView(showComments);
 
     }
+    
+    public String getComment(){ // used for testing purposes
+        return comment.getText();
+    }
 
     public void createUserView(boolean showComments) {
         recordNumber.setText(Integer.toString(e.recNum));
